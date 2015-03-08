@@ -15,6 +15,12 @@ var HomePage = React.createClass({
   propTypes: {
     currentUser: React.PropTypes.object.isRequired
   },
+  getDefaultProps: function() {
+    return {
+      currentUser: {}
+    };
+  },
+
 
   render: function() {
     return (
