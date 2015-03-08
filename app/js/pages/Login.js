@@ -4,32 +4,40 @@
 'use strict';
 
 var React         = require('react/addons');
+var _             = require('lodash');
 var Link          = React.createFactory(require('react-router').Link);
 var DocumentTitle = require('../components/DocumentTitle');
+var currentUserActions = require('../actions/CurrentUserActions');
 
 var Login = React.createClass({
-
+  mixins: [React.addons.LinkedStateMixin],
   propTypes: {
     currentUser: React.PropTypes.object.isRequired
   },
 
-    getInitialState: function() {
-      return {
-        email: '',
-        password:'',
-      }
-    },
+  getInitialState: function() {
+    return {
+      email: '',
+      password:'',
+    }
+  },
   handleSubmit: function(e)
   {
     if (e)
       {
         e.preventDefault();
       }
-      var user = {
-        email: this.state.email,
-        password: this.state.password,
-      };
-      currentUserActions.login(user, this._onUserChange);
+      if (_.isEmpty(this.state.email) || _.isEmpty(this.state.password)) {
+        this._onUserChange({message: "Username or Password can't be empty"});
+      }
+      else
+        {
+          var user = {
+            email: this.state.email,
+            password: this.state.password,
+          };
+          currentUserActions.login(user, this._onUserChange);
+        }
   },
   renderError: function() {
     if (this.state.error)
@@ -39,6 +47,8 @@ var Login = React.createClass({
       return null;
   },
   _onUserChange: function(err, user) {
+    console.log("err", err);
+    console.log("user", user);
     if ( err ) {
       this.setState({ loading: false, error: err.message });
     } else if ( !_.isEmpty(user) ) {
@@ -52,7 +62,7 @@ var Login = React.createClass({
         <DocumentTitle title="Login" />
 
         <form style={{paddingTop: "100px", textAlign: "center"}} id="loginform" onSubmit={this.handleSubmit}>
-          <div className="error">{this.renderError}</div>
+          <div className="error">{this.renderError()}</div>
           <div className="form-group">
             <input type="text" placeholder="Email" valueLink={this.linkState('email')} className="form-control" id="email"/>
           </div>

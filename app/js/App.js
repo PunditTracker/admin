@@ -14,7 +14,7 @@ var Footer             = require('./components/Footer');
 
 var App = React.createClass({
 
-  mixins: [Reflux.ListenerMixin, React.addons.LinkedStateMixin],
+  mixins: [Reflux.ListenerMixin],
 
   getInitialState: function() {
     return {
