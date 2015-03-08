@@ -37,6 +37,7 @@ var App = React.createClass({
   },
 
   render: function() {
+    console.log(this.state.currentUser);
     return (
       <div>
 

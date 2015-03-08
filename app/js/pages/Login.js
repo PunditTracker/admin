@@ -5,12 +5,14 @@
 
 var React         = require('react/addons');
 var _             = require('lodash');
+var Navigation       = require('react-router').Navigation;
+
 var Link          = React.createFactory(require('react-router').Link);
 var DocumentTitle = require('../components/DocumentTitle');
 var currentUserActions = require('../actions/CurrentUserActions');
 
 var Login = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [React.addons.LinkedStateMixin, Navigation],
   propTypes: {
     currentUser: React.PropTypes.object.isRequired
   },
@@ -20,6 +22,18 @@ var Login = React.createClass({
       email: '',
       password:'',
     }
+  },
+  _redirectTo: function()
+  {
+    this.replaceWith('Home');
+  },
+  componentDidUpdate: function() 
+  {
+    this._redirectTo();
+  },
+  componentDidMount: function() 
+  {
+    this._redirectTo();
   },
   handleSubmit: function(e)
   {
@@ -47,12 +61,10 @@ var Login = React.createClass({
       return null;
   },
   _onUserChange: function(err, user) {
-    console.log("err", err);
-    console.log("user", user);
     if ( err ) {
       this.setState({ loading: false, error: err.message });
     } else if ( !_.isEmpty(user) ) {
-      this.doRedirect();
+      this._redirectTo();
     }
   },
   render: function() {
