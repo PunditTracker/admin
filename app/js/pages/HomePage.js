@@ -5,10 +5,12 @@
 
 var React         = require('react/addons');
 var Link          = React.createFactory(require('react-router').Link);
+var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin'); 
 
 var DocumentTitle = require('../components/DocumentTitle');
 
 var HomePage = React.createClass({
+  mixins: [AuthenticatedRouteMixin],
 
   propTypes: {
     currentUser: React.PropTypes.object.isRequired

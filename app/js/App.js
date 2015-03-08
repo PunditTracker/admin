@@ -18,7 +18,8 @@ var App = React.createClass({
 
   getInitialState: function() {
     return {
-      currentUser: {}
+      currentUser: {},
+      categories: [{name:"Home", path: "Home"}, {name: "Finance", path: "Finance"}, {name: "Sports", path: "Sports"} ]
     };
   },
 
@@ -39,13 +40,12 @@ var App = React.createClass({
     return (
       <div>
 
-        <Header />
+        <Header currentUser={this.state.currentUser} categories={this.state.categories} />
 
         <RouteHandler params={this.props.params}
                       query={this.props.query}
                       currentUser={this.state.currentUser} />
 
-        <Footer />
 
       </div>
     );

@@ -7,7 +7,7 @@ var when         = require('when');
 
 var APIUtils = {
 
-  root: '//localhost:3000/api/',
+  root: '//api.dev.pundittracker.com/v1/',
 
   normalizeResponse: function(response) {
     return camelizeKeys(response.body);
