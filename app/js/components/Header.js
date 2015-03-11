@@ -21,35 +21,35 @@ var Header = React.createClass({
         </li>
       );
     });
-      return elements;
-    },
-    getLogoutButton: function()
-    {
-      if (!_.isEmpty(this.props.currentUser))
-        {
-          return (<a class="user-option button" href="/logout">Logout</a>);
-        }
-    },
-    render: function() {
-      return (
-        <header>
-          <nav>
-            <div className="pure-g">
-              <div className="pure-u-1">
-                <Link to="Home">
-                  <img className="logo-image" src="../images/logo-blue.png" alt="PunditTracker logo" />
-                </Link>
-                <ul className="categories">
-                  {this.categoryLinks()}
-                </ul>
-                {this.getLogoutButton()}
-              </div>
+    return elements;
+  },
+  getLogoutButton: function()
+  {
+    if (!_.isEmpty(this.props.currentUser))
+      {
+        return (<a class="user-option button" href="/logout">Logout</a>);
+      }
+  },
+  render: function() {
+    return (
+      <header>
+        <nav>
+          <div className="pure-g">
+            <div className="pure-u-1">
+              <Link to="Home">
+                <img className="logo-image" src="../images/logo-blue.png" alt="PunditTracker logo" />
+              </Link>
+              <ul className="categories">
+                {this.categoryLinks()}
+              </ul>
+              {this.getLogoutButton()}
             </div>
-          </nav>
-        </header>
-      );
-    }
+          </div>
+        </nav>
+      </header>
+    );
+  }
 
-  });
+});
 
-  module.exports = React.createFactory(Header);
+module.exports = Header;

@@ -35,7 +35,12 @@ var CurrentTrackStore = Reflux.createStore({
     } else {
       AuthAPI.checkLoginStatus().then(function(user) {
         this.hasBeenChecked = true;
+        if (user.isAdmin) {
         this.setUser(user, cb);
+        }
+        else {
+          this.throwError({message:"User is not authorized."}, cb);
+        }
       }.bind(this)).catch(function(err) {
         this.hasBeenChecked = true;
         this.throwError(err, cb);
@@ -47,7 +52,10 @@ var CurrentTrackStore = Reflux.createStore({
     cb = cb || function() {};
 
     AuthAPI.login(user).then(function(user) {
-      this.setUser(user, cb);
+      if (user.isAdmin)
+        this.setUser(user, cb);
+      else
+        this.throwError({message: "User is not authorized."}, cb);
     }.bind(this)).catch(function(err) {
       this.throwError(err, cb);
     }.bind(this));

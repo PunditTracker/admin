@@ -10,7 +10,7 @@ var DefaultRoute  = Router.DefaultRoute;
 
 var App           = require('./App');
 var HomePage      = require('./pages/HomePage');
-var Finance = require('./pages/HomePage');
+var Finance = require('./pages/Finance');
 var Sports = require('./pages/HomePage');
 var SearchPage    = require('./pages/SearchPage');
 var Login = require('./pages/Login');

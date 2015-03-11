@@ -9,11 +9,12 @@ var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
 
 var DocumentTitle = require('../components/DocumentTitle');
 
-var HomePage = React.createClass({
+var Finance= React.createClass({
   mixins: [AuthenticatedRouteMixin],
   componentDidMount: function()
   {
-    this.props.setCategory(0);
+    console.log("SetCat");
+    this.props.setCategory(1);
   },
 
   propTypes: {
@@ -28,9 +29,9 @@ var HomePage = React.createClass({
 
   render: function() {
     return (
-      <section className="home-page">
+      <section className="finance-page">
 
-        <DocumentTitle title="Home" />
+        <DocumentTitle title="Finance" />
 
         <div>
           Home
@@ -45,4 +46,4 @@ var HomePage = React.createClass({
   }
 
 });
-module.exports = HomePage;
+module.exports = Finance;

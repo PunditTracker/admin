@@ -10,6 +10,7 @@ var RouteHandler       = React.createFactory(require('react-router').RouteHandle
 var CurrentUserActions = require('./actions/CurrentUserActions');
 var CurrentUserStore   = require('./stores/CurrentUserStore');
 var Header             = require('./components/Header');
+var SetHeader             = require('./components/SetHeader');
 var Footer             = require('./components/Footer');
 
 var App = React.createClass({
@@ -19,7 +20,8 @@ var App = React.createClass({
   getInitialState: function() {
     return {
       currentUser: {},
-      categories: [{name:"Home", path: "Home"}, {name: "Finance", path: "Finance"}, {name: "Sports", path: "Sports"} ]
+      currentCategory: -1,
+      categories: [{name:"Home", path: "Home", categoryId: 0}, {name: "Finance", path: "Finance", categoryId: 1}, {name: "Sports", path: "Sports", categoryId: 2} ]
     };
   },
 
@@ -35,17 +37,23 @@ var App = React.createClass({
     CurrentUserActions.checkLoginStatus(this._onUserChange);
     this.listenTo(CurrentUserStore, this._onUserChange);
   },
+  setCategory: function(cat) {
+    this.setState({currentCategory: cat});
+  },
 
   render: function() {
-    console.log(this.state.currentUser);
     return (
       <div>
 
         <Header currentUser={this.state.currentUser} categories={this.state.categories} />
 
+        <SetHeader currentCategory={this.state.currentCategory} />
+
         <RouteHandler params={this.props.params}
                       query={this.props.query}
-                      currentUser={this.state.currentUser} />
+                      currentUser={this.state.currentUser}
+                      setCategory={this.setCategory}
+                    />
 
 
       </div>

@@ -10,13 +10,13 @@ var Navigation       = require('react-router').Navigation;
 var Link          = React.createFactory(require('react-router').Link);
 var DocumentTitle = require('../components/DocumentTitle');
 var currentUserActions = require('../actions/CurrentUserActions');
+var CurrentUserStore = require('../stores/CurrentUserStore');
 
 var Login = React.createClass({
   mixins: [React.addons.LinkedStateMixin, Navigation],
   propTypes: {
     currentUser: React.PropTypes.object.isRequired
   },
-
   getInitialState: function() {
     return {
       email: '',
@@ -25,13 +25,14 @@ var Login = React.createClass({
   },
   _redirectTo: function()
   {
-    this.replaceWith('Home');
+    if (!_.isEmpty(CurrentUserStore.user) && CurrentUserStore.hasBeenChecked )
+      this.replaceWith('Home');
   },
-  componentDidUpdate: function() 
+  componentDidUpdate: function()
   {
     this._redirectTo();
   },
-  componentDidMount: function() 
+  componentDidMount: function()
   {
     this._redirectTo();
   },
