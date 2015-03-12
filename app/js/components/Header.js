@@ -27,7 +27,7 @@ var Header = React.createClass({
   {
     if (!_.isEmpty(this.props.currentUser))
       {
-        return (<a class="user-option button" href="/logout">Logout</a>);
+        return (<a className="user-option button" href="/logout">Logout</a>);
       }
   },
   render: function() {

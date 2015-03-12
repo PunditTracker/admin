@@ -66,7 +66,8 @@ var Hero = React.createClass({
             </div>
           </div>
         </div>
-        );
-        }
-        });
-        module.exports = Hero;
+      </div>
+    );
+  }
+});
+module.exports = Hero;
