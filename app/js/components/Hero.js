@@ -10,9 +10,10 @@ var _               = require('lodash');
 var HeroAPI       = require('../utils/HeroAPI');
 var HeroActions = require('../actions/CurrentHeroesActions');
 var HeroStore = require('../stores/CurrentHeroesStore');
+var HeroModalMixin = require('../mixins/HeroModalMixin');
 
 var Hero = React.createClass({
-  mixins: [Reflux.ListenerMixin],
+  mixins: [Reflux.ListenerMixin, HeroModalMixin],
   getInitialState: function() {
     return {
       hero: {2: {buttonText: "See Hot NBA Predictions", buttonUrl: "/search?q=nba", categoryId: 0, imageUrl: "http://assets.pundittracker.com/hero_pic/nba.jpg", isLive: true, title: "The association is heating up"}, 3: {buttonText: "Market Predictions", buttonUrl: "/finance", categoryId: 0, imageUrl: "http://assets.pundittracker.com/hero_pic/market_predictions.png", isLive: true, title:""}, 1: {buttonText: "", buttonUrl: "", categoryId: 0, imageUrl: "http://assets.pundittracker.com/hero_pic/basket.png", isLive: true, title: "Don't miss out on the madness."}}
@@ -43,7 +44,7 @@ var Hero = React.createClass({
           <div className="pure-u-2-3">
             <div className="feature-card location-1 left large">
               <div className="background" style={{backgroundImage:"url(images/oscars.jpg)"}}>
-                <span className='edit'><a href='#' data-location-num='1' data-hero-id='1'>Edit</a></span>
+                <span className='edit'><a href='#' data-location-num='1' data-hero-id='1' onClick={this.toggleHeroModal}>Edit</a></span>
                 <div className="scrim"></div>
               </div>
               <div className='inner'>
@@ -63,7 +64,7 @@ var Hero = React.createClass({
               <div className="pure-u-1">
                 <div className="feature-card right location-2">
                   <div className="background" style={{backgroundImage:"url(images/nba.jpg)"}}>
-                    <span className='edit'><a href='#' data-location-num='2' data-hero-id='2'>Edit</a></span>
+                    <span className='edit'><a href='#' data-location-num='2' data-hero-id='2' onClick={this.toggleHeroModal}>Edit</a></span>
                     <div className="scrim"></div>
                   </div>
                   <div className="inner">
@@ -80,7 +81,7 @@ var Hero = React.createClass({
               <div className="pure-u-1">
                 <div className="feature-card right march-madness-card location-3">
                   <div className="background" style={{backgroundImage:"url(images/playoffs.jpg)"}}>
-                    <span className='edit'><a href='#' data-location-num='3' data-hero-id='3'>Edit</a></span>
+                    <span className='edit'><a href='#' data-location-num='3' data-hero-id='3' onClick={this.toggleHeroModal}>Edit</a></span>
                     <div className="scrim"></div>
                   </div>
                   <div className="inner">
