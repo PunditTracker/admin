@@ -1,2 +1,10 @@
 @import 'second';
 
+div.modal-backdrop {
+min-height:1000px;
+position:absolute !important;
+}
+div.hero-modal {
+  margin-top:20px !important;
+  width:800px !important;
+}

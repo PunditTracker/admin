@@ -47,7 +47,7 @@ var App = React.createClass({
 
         <Header currentUser={this.state.currentUser} categories={this.state.categories} />
 
-        <SetHeader currentCategory={this.state.currentCategory} />
+        <SetHeader currentUser={this.state.currentUser} currentCategory={this.state.currentCategory} />
 
         <RouteHandler params={this.props.params}
                       query={this.props.query}

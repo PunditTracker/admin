@@ -13,7 +13,7 @@ var HeroStore = require('../stores/CurrentHeroesStore');
 var HeroModalMixin = require('../mixins/HeroModalMixin');
 
 var Hero = React.createClass({
-  mixins: [Reflux.ListenerMixin, HeroModalMixin],
+  mixins: [HeroModalMixin],
   getInitialState: function() {
     return {
       hero: {2: {buttonText: "See Hot NBA Predictions", buttonUrl: "/search?q=nba", categoryId: 0, imageUrl: "http://assets.pundittracker.com/hero_pic/nba.jpg", isLive: true, title: "The association is heating up"}, 3: {buttonText: "Market Predictions", buttonUrl: "/finance", categoryId: 0, imageUrl: "http://assets.pundittracker.com/hero_pic/market_predictions.png", isLive: true, title:""}, 1: {buttonText: "", buttonUrl: "", categoryId: 0, imageUrl: "http://assets.pundittracker.com/hero_pic/basket.png", isLive: true, title: "Don't miss out on the madness."}}
@@ -21,8 +21,6 @@ var Hero = React.createClass({
   },
   _getButtonText: function(locationNum)
   {
-    // WHY DOES this get called so much?
-    console.log("loc num hero - why does this happen so many times", this.state.hero[locationNum]);
     return this.state.hero[locationNum].buttonText;
   },
   _onHeroChange: function(err, hero) {

@@ -7,8 +7,12 @@ var React = require('react/addons');
 var Link            = React.createFactory(require('react-router').Link);
 var APIUtils        = require('../utils/APIUtils');
 var _               = require('lodash');
+var CurrentUserActions = require('../actions/CurrentUserActions');
 
 var Header = React.createClass({
+  propTypes: {
+    currentUser: React.PropTypes.object.isRequired
+  },
   categoryLinks: function()
   {
     var elements = null;
@@ -23,11 +27,23 @@ var Header = React.createClass({
     });
     return elements;
   },
+  logout: function(e)
+  {
+    e.preventDefault();
+    CurrentUserActions.logout(this._onUserChange);
+  },
+  _onUserChange: function(err, user) {
+    if ( err ) {
+      this.setState({ loading: false, error: err.message });
+    } else if ( _.isEmpty(user) ) {
+      this.replaceWith('Login');
+    }
+  },
   getLogoutButton: function()
   {
     if (!_.isEmpty(this.props.currentUser))
       {
-        return (<a className="user-option button" href="/logout">Logout</a>);
+        return (<a className="user-option button" href="/logout" onClick={this.logout}>Logout</a>);
       }
   },
   render: function() {

@@ -9,14 +9,18 @@ var _               = require('lodash');
 var Hero            = require('./Hero');
 
 var SetHeader = React.createClass({
-
+  getDefaultProps: function() {
+    return {
+      currentUser: {}
+    };
+  },
   _renderHtml: function() {
     if (parseInt(this.props.currentCategory) >= 0) {
       if (this.props.currentCategory == 0) {
         // Home page do a different headers since we have Hero's.
         return (
           <section className="hero">
-            <Hero /> 
+            <Hero />
           </section>
         );
       }
@@ -25,7 +29,7 @@ var SetHeader = React.createClass({
           return (
             <section className="hero">
               <p>
-              Set Header of page: 
+                Set Header of page:
                 <input type="text" className="fullWidth" value="Header"/></p>
               <br/>
             </section>
@@ -38,7 +42,7 @@ var SetHeader = React.createClass({
     return (<div> hello</div>);
   },
   render: function() {
-    return this._renderHtml();
+    return (!_.isEmpty(this.props.currentUser) ? this._renderHtml() : (<div></div>));
   }
 
 
