@@ -42,7 +42,7 @@ var Hero = React.createClass({
           <div className="pure-u-2-3">
             <div className="feature-card location-1 left large">
               <div className="background" style={{backgroundImage:"url(images/oscars.jpg)"}}>
-                <span className='edit'><a href='#' data-location-num='1' data-hero-id='1' onClick={this.toggleHeroModal}>Edit</a></span>
+                <span className='edit'><a href='#' onClick={this.toggleHeroModal.bind(this,1)}>Edit</a></span>
                 <div className="scrim"></div>
               </div>
               <div className='inner'>
@@ -62,7 +62,7 @@ var Hero = React.createClass({
               <div className="pure-u-1">
                 <div className="feature-card right location-2">
                   <div className="background" style={{backgroundImage:"url(images/nba.jpg)"}}>
-                    <span className='edit'><a href='#' data-location-num='2' data-hero-id='2' onClick={this.toggleHeroModal}>Edit</a></span>
+                    <span className='edit'><a href='#' onClick={this.toggleHeroModal.bind(this,2)}>Edit</a></span>
                     <div className="scrim"></div>
                   </div>
                   <div className="inner">
@@ -79,7 +79,7 @@ var Hero = React.createClass({
               <div className="pure-u-1">
                 <div className="feature-card right march-madness-card location-3">
                   <div className="background" style={{backgroundImage:"url(images/playoffs.jpg)"}}>
-                    <span className='edit'><a href='#' data-location-num='3' data-hero-id='3' onClick={this.toggleHeroModal}>Edit</a></span>
+                    <span className='edit'><a href='#' onClick={this.toggleHeroModal.bind(this,3)}>Edit</a></span>
                     <div className="scrim"></div>
                   </div>
                   <div className="inner">

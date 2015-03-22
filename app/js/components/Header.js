@@ -35,8 +35,6 @@ var Header = React.createClass({
   _onUserChange: function(err, user) {
     if ( err ) {
       this.setState({ loading: false, error: err.message });
-    } else if ( _.isEmpty(user) ) {
-      this.replaceWith('Login');
     }
   },
   getLogoutButton: function()
