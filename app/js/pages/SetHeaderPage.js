@@ -5,16 +5,11 @@
 
 var React         = require('react/addons');
 var Link          = React.createFactory(require('react-router').Link);
-var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
+var SetHeader     = require('../components/SetHeader');
 
 var DocumentTitle = require('../components/DocumentTitle');
 
-var HomePage = React.createClass({
-  mixins: [AuthenticatedRouteMixin],
-  componentDidMount: function()
-  {
-    this.props.setCategory(0);
-  },
+var SetHeaderPage = React.createClass({
 
   propTypes: {
     currentUser: React.PropTypes.object.isRequired
@@ -27,18 +22,17 @@ var HomePage = React.createClass({
     };
   },
 
-
   render: function() {
-    console.log("cur user", this.props.currentUser);
     return (
-      <section className="home-page">
+      <section className="set-header">
 
-        <DocumentTitle title="Home" />
-        <Link to='SetHeader'>Set Header</Link>
+        <DocumentTitle title="Set Header" />
+        <SetHeader currentUser={this.props.currentUser} currentCategory={this.props.currentCategory} />
 
       </section>
     );
   }
 
 });
-module.exports = HomePage;
+
+module.exports = React.createFactory(SetHeaderPage);

@@ -23,9 +23,7 @@ var SetHeader = React.createClass({
             <Hero />
           </section>
         );
-      }
-      else
-        {
+      }else{
           return (
             <section className="hero">
               <p>
@@ -34,8 +32,8 @@ var SetHeader = React.createClass({
               <br/>
             </section>
           );
-        }
     }
+  }
     else {
       console.log("Current Category is empty?");
     }

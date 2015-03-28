@@ -5,6 +5,7 @@
 
 var React         = require('react/addons');
 var Link          = React.createFactory(require('react-router').Link);
+var SearchBox = require('../components/SearchBox');
 
 var DocumentTitle = require('../components/DocumentTitle');
 
@@ -23,7 +24,7 @@ var SearchPage = React.createClass({
         <div>
           Search
         </div>
-
+        <SearchBox />
         <div>
           <Link to="Home">Back to Home</Link>
         </div>

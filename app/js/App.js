@@ -10,7 +10,6 @@ var RouteHandler       = React.createFactory(require('react-router').RouteHandle
 var CurrentUserActions = require('./actions/CurrentUserActions');
 var CurrentUserStore   = require('./stores/CurrentUserStore');
 var Header             = require('./components/Header');
-var SetHeader             = require('./components/SetHeader');
 var Footer             = require('./components/Footer');
 
 var App = React.createClass({
@@ -45,9 +44,6 @@ var App = React.createClass({
     return (
       <div>
 
-        <Header currentUser={this.state.currentUser} categories={this.state.categories} />
-
-        <SetHeader currentUser={this.state.currentUser} currentCategory={this.state.currentCategory} />
 
         <RouteHandler params={this.props.params}
                       query={this.props.query}

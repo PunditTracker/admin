@@ -9,6 +9,7 @@ var NotFoundRoute = Router.NotFoundRoute;
 var DefaultRoute  = Router.DefaultRoute;
 
 var App           = require('./App');
+var SetHeaderPage      = require('./pages/SetHeaderPage');
 var HomePage      = require('./pages/HomePage');
 var Finance = require('./pages/Finance');
 var Sports = require('./pages/HomePage');
@@ -22,6 +23,7 @@ module.exports = (
     <DefaultRoute handler={HomePage} />
 
     <Route name='Home' path='/' handler={HomePage} />
+    <Route name='SetHeader' path='/SetHeader' handler={SetHeaderPage} />
     <Route name='Search' path='/search' handler={SearchPage} />
     <Route name='Finance' path='/finance' handler={Finance} />
     <Route name='Sports' path='/sports' handler={Sports} />
