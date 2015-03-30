@@ -7,7 +7,6 @@ var config       = require('../config');
 
 gulp.task('deploy', ['prod'], function() {
 
-  return function() {
     var publisher = awspublish.create({
       key: 'AKIAJTL7QEGHS6OTMSMQ',
       secret: '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',
@@ -24,6 +23,5 @@ gulp.task('deploy', ['prod'], function() {
     .pipe(awspublish.gzip())
     .pipe(publisher.publish(headers))
     .pipe(awspublish.reporter());
-  };
 
 });
