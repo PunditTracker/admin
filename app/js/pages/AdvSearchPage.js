@@ -12,10 +12,13 @@ var DocumentTitle = require('../components/DocumentTitle');
 var SearchTable = require('../components/SearchTable');
 var PredictionAPI = require('../utils/PredictionAPI');
 
+var format = 'MMM Do YYYY';
+
 var AdvSearchPage = React.createClass({
 
   getInitialState: function() {
     return {
+      showDatePicker: true,
       data: [],
       startDate: moment(),
       endDate: moment(),
@@ -33,17 +36,37 @@ var AdvSearchPage = React.createClass({
 
   handleEvent:function(event, picker){
     console.log(event);
-    this.setState({
-      startDate: picker.startDate,
-      endDate: picker.endDate,
-    });
+    if(event.type=="apply"){
+      this.setState({
+        startDate: picker.startDate,
+        endDate: picker.endDate,
+        showDatePicker: false,
+      });
+      return
+    }
+    if(event.type=="cancel"){
+      this.setState({
+                    showDatePicker: false,
+                    startDate: moment(),
+                    endDate: moment()
+      });
+    }
+  },
+
+  onKey: function(event, emit){
+    this.setState({searchString: event.target.value});
+  },
+
+  handleSubmit: function(e){
+    console.log(e);
+    e.preventDefault();
     PredictionAPI.getAllWithDates(this.state.searchString,this.state.startDate, this.state.endDate).then(function(data){
       this.setState({data:data});
     }.bind(this));
   },
 
-  onKey: function(event, emit){
-    this.setState({searchString: event.target.value});
+  onToggleCalendar: function(){
+    this.setState({showDatePicker: !this.state.showDatePicker});
   },
 
   render: function() {
@@ -55,11 +78,12 @@ var AdvSearchPage = React.createClass({
         <div>
           Advanced Search
         </div>
+        <button onClick={this.onToggleCalendar}>Calendar: {this.state.startDate.format(format)} - {this.state.endDate.format(format)}</button>
+        { this.state.showDatePicker ? <DateRangePicker startDate={this.state.startDate} endDate={this.state.endDate} ranges={this.state.ranges} onEvent={this.handleEvent} /> : null }
         
-        <form>
-        <input type='text' onKeyUp={this.onKey} />
-        <DateRangePicker startDate={this.state.startDate} endDate={this.state.endDate} ranges={this.state.ranges} onEvent={this.handleEvent} />
-        <input type='submit' />
+        <form onSubmit={this.handleSubmit}>
+          <input type='text' onKeyUp={this.onKey} />
+          <input type='submit' />
         </form>
         <div>
           <SearchTable data={this.state.data} />
