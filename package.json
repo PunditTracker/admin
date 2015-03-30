@@ -47,6 +47,7 @@
     "lodash": "^3.3.1"
   },
   "dependencies": {
+    "gulp-awspublish": "^1.0.6",
     "moment": "^2.9.0",
     "react-bootstrap-daterangepicker": "^0.2.3",
     "reactable": "^0.10.1"
