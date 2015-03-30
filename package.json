@@ -47,6 +47,8 @@
     "lodash": "^3.3.1"
   },
   "dependencies": {
+    "moment": "^2.9.0",
+    "react-bootstrap-daterangepicker": "^0.2.3",
     "reactable": "^0.10.1"
   }
 }

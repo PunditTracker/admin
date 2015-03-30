@@ -30,14 +30,25 @@ var HomePage = React.createClass({
 
   render: function() {
     console.log("cur user", this.props.currentUser);
+    if (this.props.currentUser == {}){
+      return (
+      <section className="home-page">
+        <DocumentTitle title="Home" />
+        <Link to='SetHeader'>Set Header</Link><br/>
+        <Link to='Search'>Search</Link><br/>
+        <Link to='Login'>Login</Link>
+      </section>
+      );
+    }
     return (
       <section className="home-page">
-
         <DocumentTitle title="Home" />
-        <Link to='SetHeader'>Set Header</Link>
-
+        <Link to='SetHeader'>Set Header</Link><br/>
+        <Link to='Search'>Search</Link><br/>
+        <Link to='AdvSearch'>Advanced Search</Link><br/>
       </section>
     );
+    
   }
 
 });
