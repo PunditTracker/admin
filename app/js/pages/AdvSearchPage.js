@@ -79,7 +79,7 @@ var AdvSearchPage = React.createClass({
         <div>
           Advanced Search
         </div>
-        <button onClick={this.onToggleCalendar}>Calendar: {this.state.startDate.format(format)} - {this.state.endDate.format(format)}</button>
+        <button onClick={this.onToggleCalendar}>Created Date Range: {this.state.startDate.format(format)} - {this.state.endDate.format(format)}</button>
         { this.state.showDatePicker ? <DateRangePicker startDate={this.state.startDate} endDate={this.state.endDate} ranges={this.state.ranges} onEvent={this.handleEvent} /> : null }
         
         <form onSubmit={this.handleSubmit}>
