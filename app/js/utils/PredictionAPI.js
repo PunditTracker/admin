@@ -8,7 +8,7 @@ var PredictionAPI = {
     return APIUtils.get('prediction?limit=50');
   },
   getAllWithDates: function(searchString, startDate, endDate){
-  	return APIUtils.get('/prediction/search/'+searchString+'?before='+endDate+'&after='+startDate);
+  	return APIUtils.get('/prediction/search/'+searchString+'?before='+endDate.format()+'&after='+startDate.format());
   }
 
 };
