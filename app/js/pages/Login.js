@@ -21,20 +21,39 @@ var Login = React.createClass({
     return {
       email: '',
       password:'',
+      loggingIn: false,
+      submitDisabled: true
+    };
+  },
+  _redirectIfUser: function()
+  {
+    if ( !_.isEmpty(CurrentUserStore.user) && CurrentUserStore.hasBeenChecked ) {
+      this.replaceWith('Home');
     }
   },
-  _redirectTo: function()
+  _checkForm: function()
   {
-    if (!_.isEmpty(CurrentUserStore.user) && CurrentUserStore.hasBeenChecked )
-      this.replaceWith('Home');
+    var formIsValid = this.state.email.length && this.state.password.length;
+
+    this.setState({ submitDisabled: !formIsValid });
   },
-  componentDidUpdate: function()
+  _onUserChange: function(err, user) {
+    if ( err ) {
+      this.setState({ loggingIn: false, error: err.message });
+    } else if ( !_.isEmpty(user) ) {
+      this._redirectIfUser();
+    }
+  },
+  componentDidUpdate: function(prevProps, prevState)
   {
-    this._redirectTo();
+    if ( !_.isEqual(this.state, prevState) && this.isMounted() ) {
+      this._checkForm();
+    }
+    this._redirectIfUser();
   },
   componentDidMount: function()
   {
-    this._redirectTo();
+    this._redirectIfUser();
   },
   handleSubmit: function(e)
   {
@@ -51,6 +70,7 @@ var Login = React.createClass({
             email: this.state.email,
             password: this.state.password,
           };
+          this.setState({ loggingIn: true });
           currentUserActions.login(user, this._onUserChange);
         }
   },
@@ -61,28 +81,42 @@ var Login = React.createClass({
       }
       return null;
   },
-  _onUserChange: function(err, user) {
-    if ( err ) {
-      this.setState({ loading: false, error: err.message });
-    } else if ( !_.isEmpty(user) ) {
-      this._redirectTo();
-    }
-  },
   render: function() {
+    var formStyles = {
+      'paddingTop': '100px',
+      'maxWidth': '600px',
+      'margin': '0 auto'
+    };
+
     return (
       <section className="login-page">
-
         <DocumentTitle title="Login" />
+        <form style={formStyles} className="text-center" id="loginform" onSubmit={this.handleSubmit}>
 
-        <form style={{paddingTop: "100px", textAlign: "center"}} id="loginform" onSubmit={this.handleSubmit}>
+          <img src="../images/logo_black.png" alt="PunditTracker logo" style={{ 'maxWidth': '55%' }} />
+
+          <h4>Admin Console</h4>
+
+          <input type="text"
+                 placeholder="Email"
+                 valueLink={this.linkState('email')}
+                 className="full-width nudge-half--bottom"
+                 id="email" />
+
+          <input type="password"
+                 placeholder="Password"
+                 valueLink={this.linkState('password')}
+                 className="full-width nudge-half--bottom"
+                 id="password" />
+
           <div className="error">{this.renderError()}</div>
-          <div className="form-group">
-            <input type="text" placeholder="Email" valueLink={this.linkState('email')} className="form-control" id="email"/>
-          </div>
-          <div className="form-group">
-            <input type="password" placeholder="Password" valueLink={this.linkState('password')} className="form-control" id="password"/>
-          </div>
-          <button type="submit" className="btn btn-success">Sign in</button>
+
+          <button type="submit"
+                  className="btn block full-width"
+                  disabled={this.state.loggingIn || this.state.submitDisabled ? 'true' : ''}>
+            Sign in
+          </button>
+
         </form>
       </section>
     );
