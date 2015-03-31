@@ -8,7 +8,7 @@ var streamify    = require('gulp-streamify');
 var rename       = require('gulp-rename');
 var watchify     = require('watchify');
 var browserify   = require('browserify');
-var reactify     = require('reactify');
+var babelify     = require('babelify');
 var uglify       = require('gulp-uglify');
 var browserSync  = require('browser-sync');
 var handleErrors = require('../util/handle-errors');
@@ -33,7 +33,7 @@ function buildScript(file, watch) {
     });
   }
 
-  bundler.transform(reactify);
+  bundler.transform(babelify);
 
   function rebundle() {
     var stream = bundler.bundle();
