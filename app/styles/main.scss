@@ -1,4 +1,9 @@
+// Admin-specific base styles
 @import 'second';
+
+// Element styles
+@import 'elements/date-range-picker';
+@import 'elements/reactable';
 
 div.modal-backdrop {
   min-height:1000px;
@@ -8,7 +13,7 @@ div.hero-modal {
   margin-top:20px !important;
   width:800px !important;
 }
-div.hero-modal .full-width { width:84% !important; } 
+div.hero-modal .full-width { width:84% !important; }
 div.hero-modal label {
   float:left;
   width:115px;
