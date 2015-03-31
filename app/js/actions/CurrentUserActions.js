@@ -6,6 +6,7 @@ var CurrentUserActions = Reflux.createActions([
 
   'checkLoginStatus',
   'login',
+  'facebookLogin',
   'logout'
 
 ]);

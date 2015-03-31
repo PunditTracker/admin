@@ -13,6 +13,7 @@ var CurrentTrackStore = Reflux.createStore({
 
     this.listenTo(CurrentUserActions.checkLoginStatus, this.checkLoginStatus);
     this.listenTo(CurrentUserActions.login, this.loginUser);
+    this.listenTo(CurrentUserActions.facebookLogin, this.doFacebookLogin);
     this.listenTo(CurrentUserActions.logout, this.logoutUser);
   },
 
@@ -39,7 +40,7 @@ var CurrentTrackStore = Reflux.createStore({
           this.setUser(user, cb);
         }
         else {
-          this.throwError({message:"User is not authorized."}, cb);
+          this.throwError({message:'User is not authorized.'}, cb);
         }
       }.bind(this)).catch(function(err) {
         this.hasBeenChecked = true;
@@ -52,10 +53,27 @@ var CurrentTrackStore = Reflux.createStore({
     cb = cb || function() {};
 
     AuthAPI.login(user).then(function(user) {
-      if (user.isAdmin)
+      if (user.isAdmin) {
         this.setUser(user, cb);
-      else
-        this.throwError({message: "User is not authorized."}, cb);
+      } else {
+        this.throwError({message: 'User is not authorized.'}, cb);
+      }
+    }.bind(this)).catch(function(err) {
+      this.throwError(err, cb);
+    }.bind(this));
+  },
+
+  doFacebookLogin: function(user, cb) {
+    cb = cb || function() {};
+
+    console.log('facebook login user');
+
+    AuthAPI.facebookLogin(user).then(function(user) {
+      if (user.isAdmin) {
+        this.setUser(user, cb);
+      } else {
+        this.throwError({message: 'User is not authorized.'}, cb);
+      }
     }.bind(this)).catch(function(err) {
       this.throwError(err, cb);
     }.bind(this));

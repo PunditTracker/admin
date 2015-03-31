@@ -12,6 +12,10 @@ var AuthAPI = {
     return APIUtils.post('auth/login', user);
   },
 
+  facebookLogin: function(user) {
+    return APIUtils.post('auth/loginfb', user);
+  },
+
   logout: function() {
     return APIUtils.post('auth/logout');
   }
