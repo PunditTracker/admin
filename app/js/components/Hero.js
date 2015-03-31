@@ -5,7 +5,7 @@
 
 var React = require('react/addons');
 var Reflux             = require('reflux');
-var Link            = React.createFactory(require('react-router').Link);
+var Link            = require('react-router').Link;
 var _               = require('lodash');
 var HeroAPI       = require('../utils/HeroAPI');
 var HeroActions = require('../actions/CurrentHeroesActions');

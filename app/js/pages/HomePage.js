@@ -4,7 +4,7 @@
 'use strict';
 
 var React         = require('react/addons');
-var Link          = React.createFactory(require('react-router').Link);
+var Link          = require('react-router').Link;
 var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
 
 var DocumentTitle = require('../components/DocumentTitle');
@@ -48,7 +48,7 @@ var HomePage = React.createClass({
         <Link to='AdvSearch'>Advanced Search</Link><br/>
       </section>
     );
-    
+
   }
 
 });

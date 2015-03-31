@@ -4,7 +4,7 @@
 'use strict';
 
 var React         = require('react/addons');
-var Link          = React.createFactory(require('react-router').Link);
+var Link          = require('react-router').Link;
 var SetHeader     = require('../components/SetHeader');
 
 var DocumentTitle = require('../components/DocumentTitle');
@@ -35,4 +35,4 @@ var SetHeaderPage = React.createClass({
 
 });
 
-module.exports = React.createFactory(SetHeaderPage);
+module.exports = SetHeaderPage;

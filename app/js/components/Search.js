@@ -4,7 +4,7 @@
 'use strict';
 
 var React = require('react/addons');
-var Link            = React.createFactory(require('react-router').Link);
+var Link            = require('react-router').Link;
 var Reflux                = require('reflux');
 var APIUtils        = require('../utils/APIUtils');
 var _               = require('lodash');

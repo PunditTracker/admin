@@ -3,14 +3,14 @@
  */
 'use strict';
 
-var React         = require('react/addons');
-var _             = require('lodash');
-var Navigation       = require('react-router').Navigation;
+var React              = require('react/addons');
+var _                  = require('lodash');
+var Navigation         = require('react-router').Navigation;
+var Link               = require('react-router').Link;
 
-var Link          = React.createFactory(require('react-router').Link);
-var DocumentTitle = require('../components/DocumentTitle');
+var DocumentTitle      = require('../components/DocumentTitle');
 var currentUserActions = require('../actions/CurrentUserActions');
-var CurrentUserStore = require('../stores/CurrentUserStore');
+var CurrentUserStore   = require('../stores/CurrentUserStore');
 
 var Login = React.createClass({
   mixins: [React.addons.LinkedStateMixin, Navigation],
@@ -90,4 +90,4 @@ var Login = React.createClass({
 
 });
 
-module.exports = React.createFactory(Login);
+module.exports = Login;

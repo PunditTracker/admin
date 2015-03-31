@@ -4,7 +4,7 @@
 'use strict';
 
 var React         = require('react/addons');
-var Link          = React.createFactory(require('react-router').Link);
+var Link          = require('react-router').Link;
 var SearchBox = require('../components/SearchBox');
 
 var DocumentTitle = require('../components/DocumentTitle');
@@ -35,4 +35,4 @@ var SearchPage = React.createClass({
 
 });
 
-module.exports = React.createFactory(SearchPage);
+module.exports = SearchPage;

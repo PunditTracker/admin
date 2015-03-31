@@ -4,7 +4,7 @@
 'use strict';
 
 var React         = require('react/addons');
-var Link          = React.createFactory(require('react-router').Link);
+var Link          = require('react-router').Link;
 var DateRangePicker = require('react-bootstrap-daterangepicker');
 var moment = require('moment');
 
@@ -81,7 +81,7 @@ var AdvSearchPage = React.createClass({
         </div>
         <button onClick={this.onToggleCalendar}>Created Date Range: {this.state.startDate.format(format)} - {this.state.endDate.format(format)}</button>
         { this.state.showDatePicker ? <DateRangePicker startDate={this.state.startDate} endDate={this.state.endDate} ranges={this.state.ranges} onEvent={this.handleEvent} /> : null }
-        
+
         <form onSubmit={this.handleSubmit}>
           <input type='text' onKeyUp={this.onKey} />
           <input type='submit' />
@@ -95,4 +95,4 @@ var AdvSearchPage = React.createClass({
 
 });
 
-module.exports = React.createFactory(AdvSearchPage);
+module.exports = AdvSearchPage;
