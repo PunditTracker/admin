@@ -3,11 +3,11 @@
 var React              = require('react/addons');
 var _                  = require('lodash');
 var Navigation         = require('react-router').Navigation;
-var Link               = require('react-router').Link;
 
 var DocumentTitle      = require('../components/DocumentTitle');
 var currentUserActions = require('../actions/CurrentUserActions');
 var CurrentUserStore   = require('../stores/CurrentUserStore');
+var Spinner            = require('../components/Spinner');
 
 var Login = React.createClass({
   mixins: [React.addons.LinkedStateMixin, Navigation],
@@ -72,11 +72,13 @@ var Login = React.createClass({
         }
   },
   renderError: function() {
+    var element = null;
+
     if (this.state.error)
       {
-        return (<div>{this.state.error}</div>);
+        element = (<div className="error nudge-half--bottom">{this.state.error}</div>);
       }
-      return null;
+    return element;
   },
   render: function() {
     var formStyles = {
@@ -106,12 +108,13 @@ var Login = React.createClass({
                  className="full-width nudge-half--bottom"
                  id="password" />
 
-          <div className="error">{this.renderError()}</div>
+          {this.renderError()}
 
           <button type="submit"
                   className="btn block full-width"
                   disabled={this.state.loggingIn || this.state.submitDisabled ? 'true' : ''}>
-            Sign in
+            <Spinner loading={this.state.loggingIn} />
+            Login
           </button>
 
         </form>
