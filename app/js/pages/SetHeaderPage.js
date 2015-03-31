@@ -21,7 +21,7 @@ var SetHeaderPage = React.createClass({
 
   render: function() {
     return (
-      <section className="set-header">
+      <section className="content set-header">
 
         <DocumentTitle title="Set Header" />
         <SetHeader currentUser={this.props.currentUser} currentCategory={this.props.currentCategory} />

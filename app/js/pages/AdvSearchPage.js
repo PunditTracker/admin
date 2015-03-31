@@ -69,7 +69,7 @@ var AdvSearchPage = React.createClass({
 
   render: function() {
     return (
-      <section className="search-page">
+      <section className="content no-hero search-page">
 
         <DocumentTitle title="Search" />
 

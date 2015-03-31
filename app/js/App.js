@@ -2,12 +2,12 @@
 
 var React              = require('react/addons');
 var Reflux             = require('reflux');
+var _                  = require('lodash');
 var RouteHandler       = require('react-router').RouteHandler;
 
 var CurrentUserActions = require('./actions/CurrentUserActions');
 var CurrentUserStore   = require('./stores/CurrentUserStore');
 var Header             = require('./components/Header');
-var Footer             = require('./components/Footer');
 
 var App = React.createClass({
 
@@ -33,20 +33,35 @@ var App = React.createClass({
     CurrentUserActions.checkLoginStatus(this._onUserChange);
     this.listenTo(CurrentUserStore, this._onUserChange);
   },
+
   setCategory: function(cat) {
     this.setState({currentCategory: cat});
+  },
+
+  renderHeader: function() {
+    var element = null;
+
+    // Don't render header on login page
+    if ( !_.isEmpty(this.state.currentUser) ) {
+      element = (
+        <Header currentUser={this.state.currentUser}
+                categories={this.state.categories} />
+      );
+    }
+
+    return element;
   },
 
   render: function() {
     return (
       <div>
 
+        {this.renderHeader()}
 
         <RouteHandler params={this.props.params}
                       query={this.props.query}
                       currentUser={this.state.currentUser}
                       setCategory={this.setCategory} />
-
 
       </div>
     );

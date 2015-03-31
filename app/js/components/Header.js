@@ -1,62 +1,104 @@
 'use strict';
 
-var React = require('react/addons');
-var Link            = require('react-router').Link;
-var APIUtils        = require('../utils/APIUtils');
+var React           = require('react/addons');
 var _               = require('lodash');
-var CurrentUserActions = require('../actions/CurrentUserActions');
+var Link            = require('react-router').Link;
+var Navigation      = require('react-router').Navigation;
+
+var APIUtils        = require('../utils/APIUtils');
+var UserDropdown    = require('../components/UserDropdown');
+var ListLink        = require('./ListLink');
 
 var Header = React.createClass({
+
+  mixins: [React.addons.LinkedStateMixin, Navigation],
+
   propTypes: {
-    currentUser: React.PropTypes.object.isRequired
+    currentUser: React.PropTypes.object.isRequired,
+    categories: React.PropTypes.array.isRequired,
+    className: React.PropTypes.string
   },
-  categoryLinks: function()
-  {
-    var elements = null;
-    elements = _.map(this.props.categories, function(category, index) {
-      return(
-        <li>
-          <Link to={category.path}>
-            {category.name}
-          </Link>
-        </li>
-      );
-    });
-    return elements;
+
+  getDefaultProps: function() {
+    return {
+      currentUser: {},
+      categories: []
+    };
   },
-  logout: function(e)
-  {
-    e.preventDefault();
-    CurrentUserActions.logout(this._onUserChange);
+
+  getInitialState: function() {
+    return {
+      query: ''
+    };
   },
-  _onUserChange: function(err, user) {
-    if ( err ) {
-      this.setState({ loading: false, error: err.message });
+
+  handleKeyPress: function(evt) {
+    var keyCode = evt.keyCode || evt.which;
+
+    if ( keyCode === '13' || keyCode === 13 ) {
+      this.doSearch();
     }
   },
-  getLogoutButton: function()
-  {
-    if (!_.isEmpty(this.props.currentUser))
-      {
-        return (<a className="user-option button" href="/logout" onClick={this.logout}>Logout</a>);
-      }
+
+  doSearch: function() {
+    this.transitionTo('Search', {}, { q: this.state.query });
+
+    this.setState({ query: '' }, function() {
+      this.refs.searchInput.getDOMNode().blur();
+    }.bind(this));
   },
+
+  renderCategoryLinks: function() {
+    var elements = null;
+
+    if ( this.props.categories && this.props.categories.length ) {
+      elements = _.map(this.props.categories, function(category, index) {
+        return (
+          <ListLink to="Category" params={{ category: category.name.toLowerCase() }} key={index}>
+            {APIUtils.titleCase(category.name)}
+          </ListLink>
+        );
+      });
+    }
+
+    return elements;
+  },
+
+  renderLink: function() {
+    var element = null;
+
+    if ( _.isEmpty(this.props.currentUser) ) {
+      element = (
+        <a className="user-option non-button nudge-half--left" onClick={this.toggleLoginModal}>Log in</a>
+      );
+    } else {
+      element = (
+        <UserDropdown currentUser={this.props.currentUser} />
+      );
+    }
+
+    return element;
+  },
+
   render: function() {
     return (
-      <header>
+      <header className={this.props.className}>
+
         <nav>
           <div className="pure-g">
             <div className="pure-u-1">
               <Link to="Home">
-                <img className="logo-image" src="../images/logo-blue.png" alt="PunditTracker logo" />
+                <img className="logo-image" src="../images/logo_black.png" alt="PunditTracker logo" />
               </Link>
               <ul className="categories">
-                {this.categoryLinks()}
+                {this.renderCategoryLinks()}
+                <li><a href="http://blog.pundittracker.com/" target="_blank">Blog</a></li>
               </ul>
-              {this.getLogoutButton()}
+              {this.renderLink()}
             </div>
           </div>
         </nav>
+
       </header>
     );
   }

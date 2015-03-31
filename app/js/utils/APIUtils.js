@@ -9,6 +9,20 @@ var APIUtils = {
 
   root: '//api.dev.pundittracker.com/v1/',
 
+  titleCase: function(str) {
+    var newString = str;
+
+    // Convert from camelCase
+    newString = newString.replace(/([a-z](?=[A-Z]))/g, '$1 ');
+
+    // Convert to Title Case
+    newString = str.replace(/\w\S*/g, function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+
+    return newString;
+  },
+
   normalizeResponse: function(response) {
     return camelizeKeys(response.body);
   },

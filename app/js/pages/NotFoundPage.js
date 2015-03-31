@@ -12,7 +12,7 @@ var NotFoundPage = React.createClass({
 
   render: function() {
     return (
-      <section className="not-found-page">
+      <section className="content no-hero not-found-page">
 
         <DocumentTitle title="404: Not Found" />
 

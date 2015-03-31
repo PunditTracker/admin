@@ -1,13 +1,15 @@
 'use strict';
 
 var React         = require('react/addons');
-var Link          = require('react-router').Link;
 var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
 
 var DocumentTitle = require('../components/DocumentTitle');
+var ListLink = require('../components/ListLink');
 
 var HomePage = React.createClass({
+
   mixins: [AuthenticatedRouteMixin],
+
   componentDidMount: function()
   {
     this.props.setCategory(0);
@@ -26,26 +28,21 @@ var HomePage = React.createClass({
 
 
   render: function() {
-    console.log("cur user", this.props.currentUser);
-    if (this.props.currentUser == {}){
-      return (
-      <section className="home-page">
-        <DocumentTitle title="Home" />
-        <Link to='SetHeader'>Set Header</Link><br/>
-        <Link to='Search'>Search</Link><br/>
-        <Link to='Login'>Login</Link>
-      </section>
-      );
-    }
     return (
-      <section className="home-page">
+      <section className="content no-hero home-page">
+
         <DocumentTitle title="Home" />
-        <Link to='SetHeader'>Set Header</Link><br/>
-        <Link to='Search'>Search</Link><br/>
-        <Link to='AdvSearch'>Advanced Search</Link><br/>
+
+        <div className="card-grid">
+          <ul>
+            <ListLink to="SetHeader">Set Header</ListLink>
+            <ListLink to="Search">Search</ListLink>
+            <ListLink to="AdvSearch">Advanced Search</ListLink>
+          </ul>
+        </div>
+
       </section>
     );
-
   }
 
 });

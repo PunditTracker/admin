@@ -6,7 +6,7 @@ var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
 
 var DocumentTitle = require('../components/DocumentTitle');
 
-var Finance= React.createClass({
+var CategoryPage = React.createClass({
   mixins: [AuthenticatedRouteMixin],
   componentDidMount: function()
   {
@@ -26,7 +26,7 @@ var Finance= React.createClass({
 
   render: function() {
     return (
-      <section className="finance-page">
+      <section className="content no-hero category-page">
 
         <DocumentTitle title="Finance" />
 
@@ -43,4 +43,4 @@ var Finance= React.createClass({
   }
 
 });
-module.exports = Finance;
+module.exports = CategoryPage;
