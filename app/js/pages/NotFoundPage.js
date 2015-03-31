@@ -1,8 +1,7 @@
 'use strict';
 
 var React         = require('react/addons');
-
-var DocumentTitle = require('../components/DocumentTitle');
+var DocumentTitle = require('react-document-title');
 
 var NotFoundPage = React.createClass({
 
@@ -12,13 +11,13 @@ var NotFoundPage = React.createClass({
 
   render: function() {
     return (
+      <DocumentTitle title="404: Not Found">
       <section className="content no-hero not-found-page">
-
-        <DocumentTitle title="404: Not Found" />
 
         Page Not Found
 
       </section>
+      </DocumentTitle>
     );
   }
 

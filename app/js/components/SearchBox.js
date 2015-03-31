@@ -14,17 +14,17 @@ var SearchBox = React.createClass({
 		};
 	},
 
-	componentWillMount: function(){
+	componentDidMount: function(){
 		PredictionAPI.getAll().then(function(preds){
 			console.log('preds: ',preds);
 			this.setState({data:preds});
 		}.bind(this));
 	},
 
-	render: function(){
+	render: function() {
 		return(
 			<Table className="table" data={this.state.data} itemsPerPage={10} sortable={true} />
-		)
+		);
 	},
 
 });

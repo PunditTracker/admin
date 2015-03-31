@@ -3,8 +3,8 @@
 var React              = require('react/addons');
 var _                  = require('lodash');
 var Navigation         = require('react-router').Navigation;
+var DocumentTitle      = require('react-document-title');
 
-var DocumentTitle      = require('../components/DocumentTitle');
 var currentUserActions = require('../actions/CurrentUserActions');
 var CurrentUserStore   = require('../stores/CurrentUserStore');
 var Spinner            = require('../components/Spinner');
@@ -88,8 +88,8 @@ var Login = React.createClass({
     };
 
     return (
+      <DocumentTitle title="Login">
       <section className="login-page">
-        <DocumentTitle title="Login" />
         <form style={formStyles} className="text-center" id="loginform" onSubmit={this.handleSubmit}>
 
           <img src="../images/logo_black.png" alt="PunditTracker logo" style={{ 'maxWidth': '55%' }} />
@@ -119,6 +119,7 @@ var Login = React.createClass({
 
         </form>
       </section>
+      </DocumentTitle>
     );
   }
 

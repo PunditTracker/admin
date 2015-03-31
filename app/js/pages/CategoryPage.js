@@ -1,10 +1,10 @@
 'use strict';
 
-var React         = require('react/addons');
-var Link          = require('react-router').Link;
-var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
+var React                   = require('react/addons');
+var Link                    = require('react-router').Link;
+var DocumentTitle           = require('react-document-title');
 
-var DocumentTitle = require('../components/DocumentTitle');
+var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
 
 var CategoryPage = React.createClass({
   mixins: [AuthenticatedRouteMixin],
@@ -26,9 +26,8 @@ var CategoryPage = React.createClass({
 
   render: function() {
     return (
+      <DocumentTitle title="Category">
       <section className="content no-hero category-page">
-
-        <DocumentTitle title="Finance" />
 
         <div>
           Home
@@ -39,6 +38,7 @@ var CategoryPage = React.createClass({
         </div>
 
       </section>
+      </DocumentTitle>
     );
   }
 

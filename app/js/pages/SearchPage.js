@@ -2,9 +2,9 @@
 
 var React         = require('react/addons');
 var Link          = require('react-router').Link;
-var SearchBox = require('../components/SearchBox');
+var DocumentTitle = require('react-document-title');
 
-var DocumentTitle = require('../components/DocumentTitle');
+var SearchBox     = require('../components/SearchBox');
 
 var SearchPage = React.createClass({
 
@@ -14,9 +14,8 @@ var SearchPage = React.createClass({
 
   render: function() {
     return (
+      <DocumentTitle title="Search">
       <section className="content no-hero search-page">
-
-        <DocumentTitle title="Search" />
 
         <div>
           Search
@@ -27,6 +26,7 @@ var SearchPage = React.createClass({
         </div>
 
       </section>
+      </DocumentTitle>
     );
   }
 

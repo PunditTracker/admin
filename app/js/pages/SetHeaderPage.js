@@ -2,9 +2,9 @@
 
 var React         = require('react/addons');
 var Link          = require('react-router').Link;
-var SetHeader     = require('../components/SetHeader');
+var DocumentTitle = require('react-document-title');
 
-var DocumentTitle = require('../components/DocumentTitle');
+var SetHeader     = require('../components/SetHeader');
 
 var SetHeaderPage = React.createClass({
 
@@ -21,12 +21,13 @@ var SetHeaderPage = React.createClass({
 
   render: function() {
     return (
+      <DocumentTitle title="Set Header">
       <section className="content set-header">
 
-        <DocumentTitle title="Set Header" />
         <SetHeader currentUser={this.props.currentUser} currentCategory={this.props.currentCategory} />
 
       </section>
+      </DocumentTitle>
     );
   }
 
