@@ -2,7 +2,6 @@
 
 var gulp         = require('gulp');
 var awspublish   = require('gulp-awspublish');
-var runSequence  = require('run-sequence');
 var config       = require('../config');
 
 gulp.task('deploy', ['prod'], function() {
