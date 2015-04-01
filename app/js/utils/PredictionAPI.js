@@ -14,6 +14,10 @@ var PredictionAPI = {
 
   searchWithDates: function(query, startDate, endDate){
   	return APIUtils.get('/prediction/search/'+query+'?before='+endDate.format()+'&after='+startDate.format());
+  },
+
+  searchWithUserName: function(username){
+  	return APIUtils.get('/user/prediction/search/'+username);
   }
 
 };
