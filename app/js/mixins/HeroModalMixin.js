@@ -6,13 +6,14 @@ var when                  = require('when');
 var APIUtils              = require('../utils/APIUtils');
 var CurrentHeroesActions  = require('../actions/CurrentHeroesActions');
 var LayeredComponentMixin = require('./LayeredComponentMixin');
+var PredictionSearchModalMixin = require('./PredictionSearchModalMixin');
 var Modal                 = require('../components/Modal');
 var FileInput             = require('../components/FileInput');
 var Spinner               = require('../components/Spinner');
 
 var HeroModalMixin = {
 
-  mixins: [React.addons.LinkedStateMixin, LayeredComponentMixin],
+  mixins: [React.addons.LinkedStateMixin, LayeredComponentMixin, PredictionSearchModalMixin],
 
   getInitialState: function() {
     return {
@@ -38,6 +39,10 @@ var HeroModalMixin = {
 
   updateImage: function(file) {
     this.setState({ newImage: file });
+  },
+
+  setPrediction: function(prediction) {
+    this.setState({ predictionId: prediction.id });
   },
 
   uploadImage: function() {
@@ -134,14 +139,19 @@ var HeroModalMixin = {
                    placeholder="Button URL"
                    className="full-width nudge-half--bottom" />
 
+            <button className="btn block full-width nudge-half--bottom"
+                    onClick={this.showPredictionSearchModal.bind(null, this.setPrediction)}>
+              Search and Select a Prediction (Optional)
+            </button>
+
             <input type="text"
                    valueLink={this.linkState('predictionId')}
                    id="predictionId"
                    placeholder="Associated prediction ID (optional)"
                    className="full-width nudge-half--bottom" />
 
-            <div>
-              <label htmlFor="image-input" className="flush text-left">Background Image</label>
+            <div className="text-left">
+              <label htmlFor="image-input">Background Image</label>
             </div>
 
             <FileInput id="image-input"

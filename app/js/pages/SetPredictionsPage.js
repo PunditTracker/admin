@@ -6,7 +6,6 @@ var DocumentTitle           = require('react-document-title');
 
 var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
 var APIUtils                = require('../utils/APIUtils');
-var PredictionSearch        = require('../components/PredictionSearch');
 
 var CategoryPage = React.createClass({
 
@@ -60,7 +59,6 @@ var CategoryPage = React.createClass({
     return elements;
   },
 
-
   render: function() {
     return (
       <DocumentTitle title="Set Predictions">
@@ -77,10 +75,6 @@ var CategoryPage = React.createClass({
             </button>
             {this.renderCategoryToggles()}
           </div>
-
-          <PredictionSearch handleResultsRowClick={this.choosePredictionFromResults}
-                            itemsPerPage={5}
-                            showNoResultsMessage={false} />
 
         </div>
 

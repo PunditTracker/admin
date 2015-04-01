@@ -8,15 +8,15 @@ var DocumentTitle           = require('react-document-title');
 
 var APIUtils                = require('../utils/APIUtils');
 var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
+var UserSearchModalMixin    = require('../mixins/UserSearchModalMixin');
 var PredictionCard          = require('../components/PredictionCard');
 var User                    = require('../components/User');
 var TagInput                = require('../components/TagInput');
 var Spinner                 = require('../components/Spinner');
-var UserSearch              = require('../components/UserSearch');
 
 var AnyUserPredictPage = React.createClass({
 
-  mixins: [React.addons.LinkedStateMixin, AuthenticatedRouteMixin],
+  mixins: [React.addons.LinkedStateMixin, AuthenticatedRouteMixin, UserSearchModalMixin],
 
   propTypes: {
     currentUser: React.PropTypes.object.isRequired,
@@ -333,12 +333,12 @@ var AnyUserPredictPage = React.createClass({
       <DocumentTitle title="Predict As Any User">
       <section className="content no-hero predict">
 
-        <div className="container card-grid">
+        <div className="container">
           <h3 className="text-center flush--top">Submit a Prediction by Any User</h3>
 
-          <UserSearch handleResultsRowClick={this.setCreator}
-                      itemsPerPage={5}
-                      showNoResultsMessage={false} />
+          <button className="btn block full-width nudge-half--bottom" onClick={this.showUserSearchModal.bind(null, this.setCreator)}>
+            Search and Select a User
+          </button>
 
           <div className="content-with-sidebar left hard--bottom">
             {this.state.posted ? this.renderSuccessMessage() : this.renderForm()}
