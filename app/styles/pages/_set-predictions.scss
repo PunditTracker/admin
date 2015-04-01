@@ -1,5 +1,21 @@
 section.set-predictions-page {
 
+  ul.location-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 
+    & > li {
+      display: table;
+      width: 100%;
+      vertical-align: middle;
+
+      & > div {
+        display: table-cell;
+        vertical-align: middle;
+        padding: $half-space;
+      }
+    }
+  }
 
 }

@@ -1,15 +1,17 @@
 'use strict';
 
-var React                   = require('react/addons');
-var _                       = require('lodash');
-var DocumentTitle           = require('react-document-title');
+var React                      = require('react/addons');
+var _                          = require('lodash');
+var DocumentTitle              = require('react-document-title');
 
-var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
-var APIUtils                = require('../utils/APIUtils');
+var AuthenticatedRouteMixin    = require('../mixins/AuthenticatedRouteMixin');
+var PredictionSearchModalMixin = require('../mixins/PredictionSearchModalMixin');
+var APIUtils                   = require('../utils/APIUtils');
+var Spinner                    = require('../components/Spinner');
 
 var CategoryPage = React.createClass({
 
-  mixins: [AuthenticatedRouteMixin],
+  mixins: [AuthenticatedRouteMixin, PredictionSearchModalMixin],
 
   propTypes: {
     currentUser: React.PropTypes.object.isRequired,
@@ -25,16 +27,52 @@ var CategoryPage = React.createClass({
 
   getInitialState: function() {
     return {
-      categoryId: 0
+      categoryId: 0,
+      locations: [{}],
+      loading: false
     };
   },
 
   setNewCategory: function(id) {
-    this.setState({ categoryId: id });
+    this.setState({
+      categoryId: id,
+      locations: [{}]
+    });
   },
 
-  choosePredictionFromResults: function(prediction) {
+  getPredictionAtLocation: function(locationNum) {
+    var location = _.find(this.state.locations, function(location) {
+      return location.locationNum === locationNum;
+    });
+
+    return location ? location.prediction : {};
+  },
+
+  removeLocation: function(locationNum) {
+    var locationsCopy = _.reject(this.state.locations, function(location) {
+      return location.locationNum === locationNum;
+    });
+
+    this.setState({ locations: locationsCopy });
+  },
+
+  setPredictionAtLocation: function(prediction, locationNum) {
+    var location = {
+      id: null, // TODO: where does this come from
+      locationNum: locationNum,
+      categoryId: this.state.categoryId,
+      prediction: prediction
+    };
+
     console.log('choose prediction:', prediction);
+  },
+
+  saveLocations: function(evt) {
+    if ( evt ) {
+      evt.preventDefault();
+    }
+
+    this.setState({ loading: true });
   },
 
   renderCategoryToggles: function() {
@@ -59,6 +97,31 @@ var CategoryPage = React.createClass({
     return elements;
   },
 
+  renderLocationInputs: function() {
+    return _.map(this.state.locations, function(location, index) {
+      return (
+        <li key={index} className="white">
+          <div className="location-number-container">
+            <h3 className="flush">{index}</h3>
+          </div>
+          <div className="prediction-title-container">
+            <span>{this.getPredictionAtLocation(index).title}</span>
+          </div>
+          <div className="choose-prediction-container">
+            <button className="btn" onClick={this.showPredictionSearchModal.bind(null, this.setPredictionAtLocation)}>
+              <i className="fa fa-asterisk" />
+            </button>
+          </div>
+          <div className="remove-prediction-container">
+            <button className="btn red" onClick={this.removeLocation.bind(null, index)}>
+              <i className="fa fa-remove" />
+            </button>
+          </div>
+        </li>
+      );
+    }.bind(this));
+  },
+
   render: function() {
     return (
       <DocumentTitle title="Set Predictions">
@@ -75,6 +138,18 @@ var CategoryPage = React.createClass({
             </button>
             {this.renderCategoryToggles()}
           </div>
+
+          <form onSubmit={this.saveLocations}>
+            <ul className="locations-list nudge-half--bottom">
+              <li></li>
+              {this.renderLocationInputs()}
+            </ul>
+
+            <button type="submit" className="btn">
+              <Spinner loading={this.state.loading} />
+              Save Predictions in Locations
+            </button>
+          </form>
 
         </div>
 

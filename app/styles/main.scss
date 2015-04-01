@@ -21,3 +21,9 @@
     clear: both;
   }
 }
+
+.btn.red {
+  background-color: $red !important;
+
+  &:hover { background-color: lighten($red, 10) !important; }
+}
