@@ -98,12 +98,21 @@ var UserSearch = React.createClass({
 
   renderResults: function() {
     var element = null;
+    var rebuiltResults = _.map(this.state.results, function(result) {
+      return {
+        id: result.id,
+        title: result.title,
+        created: result.created,
+        deadline: result.deadline,
+        creatorName: result.creator.firstName + ' ' + result.creator.lastName
+      };
+    });
 
-    if ( !this.state.loading && !_.isEmpty(this.state.results) ) {
+    if ( !this.state.loading && !_.isEmpty(rebuiltResults) ) {
       element = (
         <div>
-          <SearchTable data={this.state.results}
-                       cols={['id', 'title', 'created', 'deadline']}
+          <SearchTable data={rebuiltResults}
+                       cols={['id', 'title', 'creatorName', 'created', 'deadline']}
                        itemsPerPage={this.props.itemsPerPage}
                        rowClickCallback={this.props.handleResultsRowClick}/>
         </div>
