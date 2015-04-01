@@ -74,13 +74,13 @@ var UserSearch = React.createClass({
       evt.preventDefault();
     }
 
-    this.setState({ loading: true });
+    this.setState({ loading1: true, loading2: true, results: [] });
 
     PredictionAPI.searchWithDates(this.state.query,this.state.startDate, this.state.endDate).then(function(results){
-      this.setState({ loading: false, results: this.state.results.concat(results) });
+      this.setState({ loading1: false, results: this.state.results.concat(results) });
     }.bind(this));
     PredictionAPI.searchWithUserName(this.state.query).then(function(results){
-      this.setState({loading:false, results: this.state.results.concat(results)})
+      this.setState({ loading2:false, results: this.state.results.concat(results)})
     }.bind(this));
   },
 
@@ -111,19 +111,23 @@ var UserSearch = React.createClass({
       };
     });
 
-    if ( !this.state.loading && !_.isEmpty(rebuiltResults) ) {
-      element = (
-        <div>
-          <SearchTable data={rebuiltResults}
-                       cols={['id', 'title', 'creatorName', 'created', 'deadline']}
-                       itemsPerPage={this.props.itemsPerPage}
-                       rowClickCallback={this.props.handleResultsRowClick}/>
-        </div>
-      );
-    } else if ( !this.state.loading && this.props.showNoResultsMessage ) {
-      element = (
-        <h4 className="text-center">No results.</h4>
-      );
+
+    var loading = this.state.loading1 || this.state.loading2;
+    if (!loading) {
+      if ( !_.isEmpty(rebuiltResults) ) {
+        element = (
+          <div>
+            <SearchTable data={rebuiltResults}
+                         cols={['id', 'title', 'creatorName', 'created', 'deadline']}
+                         itemsPerPage={this.props.itemsPerPage}
+                         rowClickCallback={this.props.handleResultsRowClick}/>
+          </div>
+        );
+      } else if ( this.props.showNoResultsMessage ) {
+        element = (
+          <h4 className="text-center">No results.</h4>
+        );
+      }
     }
 
     return element;
@@ -134,7 +138,7 @@ var UserSearch = React.createClass({
       'maxWidth': '600px',
       'margin': '0 auto'
     };
-
+    var loading = this.state.loading1 || this.state.loading2;
     return (
       <div>
         <h5 className="text-center flush--top nudge--bottom">
@@ -151,8 +155,8 @@ var UserSearch = React.createClass({
                  className="block full-width nudge-half--bottom" />
           <button className="btn block full-width"
                   type="submit"
-                  disabled={this.state.loading ? 'true' : ''}>
-            <Spinner loading={this.state.loading} />
+                  disabled={loading ? 'true' : ''}>
+            <Spinner loading={loading} />
             Search
           </button>
         </form>
