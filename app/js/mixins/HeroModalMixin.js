@@ -6,14 +6,14 @@ var when                  = require('when');
 var APIUtils              = require('../utils/APIUtils');
 var CurrentHeroesActions  = require('../actions/CurrentHeroesActions');
 var LayeredComponentMixin = require('./LayeredComponentMixin');
-var PredictionSearchModalMixin = require('./PredictionSearchModalMixin');
+// var PredictionSearchModalMixin = require('./PredictionSearchModalMixin');
 var Modal                 = require('../components/Modal');
 var FileInput             = require('../components/FileInput');
 var Spinner               = require('../components/Spinner');
 
 var HeroModalMixin = {
 
-  mixins: [React.addons.LinkedStateMixin, LayeredComponentMixin, PredictionSearchModalMixin],
+  mixins: [React.addons.LinkedStateMixin, LayeredComponentMixin/*, PredictionSearchModalMixin*/],
 
   getInitialState: function() {
     return {
@@ -139,11 +139,6 @@ var HeroModalMixin = {
                    placeholder="Button URL"
                    className="full-width nudge-half--bottom" />
 
-            <button className="btn block full-width nudge-half--bottom"
-                    onClick={this.showPredictionSearchModal.bind(null, this.setPrediction)}>
-              Search and Select a Prediction (Optional)
-            </button>
-
             <input type="text"
                    valueLink={this.linkState('predictionId')}
                    id="predictionId"
@@ -192,3 +187,8 @@ var HeroModalMixin = {
 };
 
 module.exports = HeroModalMixin;
+
+// <button className="btn block full-width nudge-half--bottom"
+//         onClick={this.showPredictionSearchModal.bind(null, this.setPrediction)}>
+//   Search and Select a Prediction (Optional)
+// </button>
