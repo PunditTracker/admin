@@ -54,7 +54,7 @@ var Hero = React.createClass({
     var heroThree = this.state.hero[3] || {};
 
     return (
-      <div className="hero fixed done nudge--bottom">
+      <div className="hero fixed done nudge--bottom hard--top">
         <div className="pure-g card-grid">
           <div className="pure-u-2-3">
             <div className="feature-card location-1 left large">

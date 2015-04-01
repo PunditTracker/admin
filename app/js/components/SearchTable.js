@@ -31,7 +31,7 @@ var SearchTable = React.createClass({
   renderRows: function() {
     return _.map(this.props.data, function(row, index) {
       return (
-        <Tr key={index} onClick={this.props.handleResultsRowClick.bind(null, row)}>
+        <Tr key={index} onClick={this.props.handleResultsRowClick.bind(null, row)} style={{ 'cursor': 'pointer' }}>
           {this.renderColumns(row)}
         </Tr>
       );

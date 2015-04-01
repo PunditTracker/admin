@@ -84,7 +84,7 @@ var UserSearch = React.createClass({
                  className="block full-width nudge-half--bottom" />
           <button className="btn block full-width"
                   type="submit"
-                  disabled={this.state.loading ? 'true' : ''}>
+                  disabled={!this.state.query || this.state.loading ? 'true' : ''}>
             <Spinner loading={this.state.loading} />
             Search
           </button>

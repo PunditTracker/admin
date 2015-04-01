@@ -1,5 +1,41 @@
 section.home-page {
 
+  ul.page-list {
+    display: block;
+    margin: 0 auto;
+    list-style: none;
 
+    & > li {
+      float: left;
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 0 0 $full-space;
+      padding: $full-space;
+
+      background-color: $purple;
+      color: $white;
+      text-align: center;
+
+      a {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      // TODO: add icon for each square above link name
+      i {}
+
+      &:hover {
+        background-color: lighten($purple, 10);
+      }
+
+      &:not(:last-child) {
+        margin-right: $full-space*2.5;
+      }
+    }
+  }
 
 }

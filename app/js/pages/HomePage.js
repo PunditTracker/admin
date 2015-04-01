@@ -2,9 +2,10 @@
 
 var React                   = require('react/addons');
 var DocumentTitle           = require('react-document-title');
+var _                       = require('lodash');
+var Link                    = require('react-router').Link;
 
 var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
-var ListLink                = require('../components/ListLink');
 
 var HomePage = React.createClass({
 
@@ -20,6 +21,44 @@ var HomePage = React.createClass({
     };
   },
 
+  renderPageLinks: function() {
+    var pages = [
+      {
+        title: 'Set Hero',
+        routerPageName: 'SetHero'
+      },
+      {
+        title: 'Prediction Search',
+        routerPageName: 'PredictionSearch'
+      },
+      {
+        title: 'User Search',
+        routerPageName: 'UserSearch'
+      },
+      {
+        title: 'Set Predictions',
+        routerPageName: 'SetPredictions'
+      },
+      {
+        title: 'Submit Predictions as Any User',
+        routerPageName: 'AnyUserPredict'
+      },
+      {
+        title: 'Bulk Submit Special Event Results',
+        routerPageName: 'SubmitSpecialEventResults'
+      }
+    ];
+
+    return _.map(pages, function(page, index) {
+      return (
+        <li key={index}>
+          <i className={'fa nudge-half--bottom ' + page.iconClass} />
+          <h3 className="title">{page.title}</h3>
+          <Link to={page.routerPageName} />
+        </li>
+      );
+    });
+  },
 
   render: function() {
     return (
@@ -27,12 +66,8 @@ var HomePage = React.createClass({
       <section className="content no-hero home-page">
 
         <div className="container">
-          <ul>
-            <ListLink to="SetHero">Set Hero</ListLink>
-            <ListLink to="PredictionSearch">Prediction Search</ListLink>
-            <ListLink to="SetPredictions">Set Predictions</ListLink>
-            <ListLink to="AnyUserPredict">Submit Predictions as Any User</ListLink>
-            <ListLink to="SubmitSpecialEventResults">Bulk Submit Special Event Results</ListLink>
+          <ul className="page-list clearfix">
+            {this.renderPageLinks()}
           </ul>
         </div>
 

@@ -132,7 +132,7 @@ var UserSearch = React.createClass({
             <SearchTable data={rebuiltResults}
                          cols={['id', 'title', 'creatorName', 'created', 'deadline']}
                          itemsPerPage={this.props.itemsPerPage}
-                         rowClickCallback={this.props.handleResultsRowClick}/>
+                         rowClickCallback={this.props.handleResultsRowClick} />
           </div>
         );
       } else if ( this.props.showNoResultsMessage ) {
