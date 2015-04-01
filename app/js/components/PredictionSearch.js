@@ -45,7 +45,8 @@ var UserSearch = React.createClass({
         'Last 5 Years': [moment().subtract(5, 'year'), moment()],
       },
       error: null,
-      loading: false
+      loadingPredictionSearch: false,
+      loadingPredictionSearchByUser: false
     };
   },
 
@@ -75,13 +76,24 @@ var UserSearch = React.createClass({
       evt.preventDefault();
     }
 
-    this.setState({ loading1: true, loading2: true, results: [] });
+    this.setState({
+      loadingPredictionSearch: true,
+      loadingPredictionSearchByUser: true,
+      results: []
+    });
 
     PredictionAPI.searchWithDates(this.state.query,this.state.startDate, this.state.endDate).then(function(results){
-      this.setState({ loading1: false, results: this.state.results.concat(results) });
-    }.bind(this));
-    PredictionAPI.searchWithUserName(this.state.query).then(function(results){
-      this.setState({ loading2:false, results: this.state.results.concat(results)})
+      this.setState({
+        loadingPredictionSearch: false,
+        results: this.state.results.concat(results)
+      }, function() {
+        PredictionAPI.searchByUser(this.state.query).then(function(results){
+          this.setState({
+            loadingPredictionSearchByUser: false,
+            results: this.state.results.concat(results)
+          });
+        }.bind(this));
+      }.bind(this));
     }.bind(this));
   },
 
@@ -111,10 +123,9 @@ var UserSearch = React.createClass({
         creatorName: result.creator.firstName + ' ' + result.creator.lastName
       };
     });
+    var loading = this.state.loadingPredictionSearch || this.state.loadingPredictionSearchByUser;
 
-
-    var loading = this.state.loading1 || this.state.loading2;
-    if (!loading) {
+    if ( !loading ) {
       if ( !_.isEmpty(rebuiltResults) ) {
         element = (
           <div>
@@ -139,7 +150,8 @@ var UserSearch = React.createClass({
       'maxWidth': '600px',
       'margin': '0 auto'
     };
-    var loading = this.state.loading1 || this.state.loading2;
+    var loading = this.state.loadingPredictionSearch || this.state.loadingPredictionSearchByUser;
+
     return (
       <div>
         <h5 className="text-center flush--top nudge--bottom">
