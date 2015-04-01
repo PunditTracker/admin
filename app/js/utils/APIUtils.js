@@ -105,6 +105,23 @@ var APIUtils = {
     }.bind(this));
 
     return deferred.promise;
+  },
+
+  uploadFile: function(path, file) {
+    var deferred = when.defer();
+
+    request.post(this.root + path)
+    .withCredentials()
+    .attach('file', file)
+    .end(function(res) {
+      if ( !res.ok ) {
+        deferred.reject(this.normalizeResponse(res));
+      } else {
+        deferred.resolve(this.normalizeResponse(res));
+      }
+    }.bind(this));
+
+    return deferred.promise;
   }
 
 };

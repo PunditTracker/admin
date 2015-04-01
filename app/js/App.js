@@ -5,7 +5,9 @@ var Reflux             = require('reflux');
 var _                  = require('lodash');
 var RouteHandler       = require('react-router').RouteHandler;
 
+var GlobalActions      = require('./actions/GlobalActions');
 var CurrentUserActions = require('./actions/CurrentUserActions');
+var CategoriesStore    = require('./stores/CategoriesStore');
 var CurrentUserStore   = require('./stores/CurrentUserStore');
 var Header             = require('./components/Header');
 
@@ -17,8 +19,16 @@ var App = React.createClass({
     return {
       currentUser: {},
       currentCategory: -1,
-      categories: [{name:"Home", path: "Home", categoryId: 0}, {name: "Finance", path: "Finance", categoryId: 1}, {name: "Sports", path: "Sports", categoryId: 2} ]
+      categories: []
     };
+  },
+
+  _onCategoriesChange: function(err, categories) {
+    if ( err ) {
+      this.setState({ error: err.message });
+    } else {
+      this.setState({ categories: categories || [] });
+    }
   },
 
   _onUserChange: function(err, user) {
@@ -30,7 +40,9 @@ var App = React.createClass({
   },
 
   componentDidMount: function() {
+    GlobalActions.loadCategories(this._onCategoriesChange);
     CurrentUserActions.checkLoginStatus(this._onUserChange);
+    this.listenTo(CategoriesStore, this._onCategoriesChange);
     this.listenTo(CurrentUserStore, this._onUserChange);
   },
 
@@ -44,8 +56,7 @@ var App = React.createClass({
     // Don't render header on login page
     if ( !_.isEmpty(this.state.currentUser) ) {
       element = (
-        <Header currentUser={this.state.currentUser}
-                categories={this.state.categories} />
+        <Header currentUser={this.state.currentUser} />
       );
     }
 
@@ -61,6 +72,7 @@ var App = React.createClass({
         <RouteHandler params={this.props.params}
                       query={this.props.query}
                       currentUser={this.state.currentUser}
+                      categories={this.state.categories}
                       setCategory={this.setCategory} />
 
       </div>

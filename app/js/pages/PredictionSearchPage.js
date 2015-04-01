@@ -12,7 +12,7 @@ var Spinner         = require('../components/Spinner');
 
 var format = 'MMM Do YYYY';
 
-var AdvSearchPage = React.createClass({
+var PredictionSearchPage = React.createClass({
 
   mixins: [React.addons.LinkedStateMixin],
 
@@ -108,8 +108,8 @@ var AdvSearchPage = React.createClass({
     };
 
     return (
-      <DocumentTitle title="Search">
-      <section className="content no-hero search-page">
+      <DocumentTitle title="Prediction Search">
+      <section className="content no-hero prediction-search-page">
 
         <div className="container">
           <h3 className="text-center flush">Advanced Prediction Search</h3>
@@ -142,4 +142,4 @@ var AdvSearchPage = React.createClass({
 
 });
 
-module.exports = AdvSearchPage;
+module.exports = PredictionSearchPage;

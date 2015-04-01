@@ -64,22 +64,6 @@ var Header = React.createClass({
     return elements;
   },
 
-  renderLink: function() {
-    var element = null;
-
-    if ( _.isEmpty(this.props.currentUser) ) {
-      element = (
-        <a className="user-option non-button nudge-half--left" onClick={this.toggleLoginModal}>Log in</a>
-      );
-    } else {
-      element = (
-        <UserDropdown currentUser={this.props.currentUser} />
-      );
-    }
-
-    return element;
-  },
-
   render: function() {
     return (
       <header className={this.props.className}>
@@ -91,10 +75,11 @@ var Header = React.createClass({
                 <img className="logo-image" src="../images/logo_black.png" alt="PunditTracker logo" />
               </Link>
               <ul className="categories">
-                {this.renderCategoryLinks()}
-                <li><a href="http://blog.pundittracker.com/" target="_blank">Blog</a></li>
+                <ListLink to="SetHero">Set Hero</ListLink>
+                <ListLink to="PredictionSearch">Prediction Search</ListLink>
+                <ListLink to="SetPredictions">Set Predictions</ListLink>
               </ul>
-              {this.renderLink()}
+              <UserDropdown currentUser={this.props.currentUser} />
             </div>
           </div>
         </nav>

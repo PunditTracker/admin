@@ -1,70 +1,176 @@
 'use strict';
 
 var React                 = require('react/addons');
-var Reflux                = require('reflux');
-var _                     = require('lodash');
+var when                  = require('when');
 
+var APIUtils              = require('../utils/APIUtils');
+var CurrentHeroesActions  = require('../actions/CurrentHeroesActions');
 var LayeredComponentMixin = require('./LayeredComponentMixin');
 var Modal                 = require('../components/Modal');
-var SearchModalMixin      = require('./SearchModalMixin');
+var FileInput             = require('../components/FileInput');
+var Spinner               = require('../components/Spinner');
 
 var HeroModalMixin = {
-  // NOTE: React.addons.LinkedStateMixin is also required, but is already included in Header.js where this mixin is used
-  mixins: [ SearchModalMixin ],
+
+  mixins: [React.addons.LinkedStateMixin, LayeredComponentMixin],
 
   getInitialState: function() {
     return {
       showHeroModal: false,
       locationNumber: -1,
+      title: '',
+      buttonText: '',
+      buttonUrl: '',
+      imageUrl: '',
+      predictionId: '',
+      newImage: null,
+      loading: false,
+      error: null
     };
   },
-  handleSubmit: function(e) {
-    e.preventDefault();
-  },
-  toggleHeroModal: function(location_number) {
+
+  toggleHeroModal: function(locationNum) {
     this.setState({
       showHeroModal: !this.state.showHeroModal,
-      locationNumber: location_number
+      locationNumber: locationNum
     });
   },
-  componentDidUpdate: function(prevProps, prevState) {
-    if ( !_.isEqual(this.state, prevState) && this.isMounted() ) {
 
-    } else if ( !_.isEmpty(this.props.currentUser) && this.state.showHeroModal) {
-      // Hide modal if user is updated while open
-      this.setState({ showHeroModal: false });
-    }
+  updateImage: function(file) {
+    this.setState({ newImage: file });
   },
+
+  uploadImage: function() {
+    var deferred = when.defer();
+
+    if ( this.state.newImage ) {
+      APIUtils.uploadFile('admin/image/add/hero', this.state.newImage).then(function(res) {
+        this.setState({ imageUrl: res.link }, deferred.resolve);
+      }.bind(this)).catch(function(err) {
+        deferred.reject(err);
+      }.bind(this));
+    } else {
+      deferred.resolve();
+    }
+
+    return deferred.promise;
+  },
+
+  updateHero: function() {
+    var deferred = when.defer();
+    var hero = {
+      id: this.state.hero[this.state.locationNumber].id,
+      locationNum: this.state.locationNumber,
+      title: this.state.title,
+      buttonText: this.state.buttonText,
+      buttonUrl: this.state.buttonUrl,
+      imageUrl: this.state.imageUrl,
+      predictionId: this.state.predictionId ? parseInt(this.state.predictionId) : null,
+      isLive: true
+    };
+
+    CurrentHeroesActions.saveHero(hero).then(deferred.resolve).catch(deferred.reject);
+
+    return deferred.promise;
+  },
+
+  handleSubmit: function(evt) {
+    if ( evt ) {
+      evt.preventDefault();
+    }
+
+    this.setState({ loading: true });
+
+    this.uploadImage().then(this.updateHero).then(function() {
+      this.setState({
+        loading: false,
+        error: null,
+        showHeroModal: false,
+        locationNumber: -1
+      });
+    }.bind(this)).catch(function(err) {
+      this.setState({ loading: false, error: err.message });
+    });
+  },
+
+  renderError: function() {
+    var element = null;
+
+    if ( this.state.error ) {
+      element = (
+        <div className="error-container nudge-half--bottom">{this.state.error}</div>
+      );
+    }
+
+    return element;
+  },
+
   renderLayer: function() {
     var element = (<span/>);
 
     if ( this.state.showHeroModal ) {
       element = (
         <Modal className="hero-modal" onRequestClose={this.toggleHeroModal}>
-          <h4> Hero Location {this.state.locationNumber}</h4>
-          <div id="hero-form" className="nudge-half--bottom">
-            <input id="locationNum" type="hidden" value="-1"/>
-            <input id="heroId" type="hidden" value="-1"/>
-            <p><label htmlFor="headerText">Header</label><textarea id="headerText" rows="5" className="full-width"></textarea></p>
-            <p><label htmlFor="buttonText">Button Text</label><input type="text" id="buttonText" className="full-width"/></p>
-            <p><label htmlFor="buttonUrl">Button Url</label><input type="text" id="buttonUrl" className="full-width"/></p>
-            <p><label htmlFor="predictionId">Set Prediction</label>
-              {this._searchModalHTML()}
-            </p>
-            <p><label htmlFor="filetime">Background Image</label></p>
-            <div className='imageUploadMessage'></div>
-            <div className='imageUpload'>
-              <form enctype="multipart/form-data">
-                <input id="filetime" name="file" type="file" style={{width:"500px"}} />
-                <input type="button" id="uploadPicture" value="Upload" />
-              </form>
-              <br/>
-              <div>OR</div>
-            </div>
-            <p><label htmlFor="imageURL">Background Image URL: </label><input type="text" id="imageURL" className="full-width" /></p>
-            <p><input type="submit" value="Done" name="commit" id="uploadHero"/> or <a onClick={this.toggleHeroModal}>Cancel</a></p>
 
-          </div>
+          <h4 className="flush--top">Hero Location {this.state.locationNumber}</h4>
+
+          <form id="hero-form" className="nudge-half--bottom" onSubmit={this.handleSubmit}>
+
+            <textarea id="headerText"
+                      valueLink={this.linkState('title')}
+                      rows="3"
+                      className="full-width nudge-half--bottom"
+                      placeholder="Hero title text" />
+
+            <input type="text"
+                   valueLink={this.linkState('buttonText')}
+                   id="buttonText"
+                   placeholder="Button Text"
+                   className="full-width nudge-half--bottom" />
+
+            <input type="text"
+                   valueLink={this.linkState('buttonUrl')}
+                   id="buttonUrl"
+                   placeholder="Button URL"
+                   className="full-width nudge-half--bottom" />
+
+            <input type="text"
+                   valueLink={this.linkState('predictionId')}
+                   id="predictionId"
+                   placeholder="Associated prediction ID (optional)"
+                   className="full-width nudge-half--bottom" />
+
+            <div>
+              <label htmlFor="image-input" className="flush text-left">Background Image</label>
+            </div>
+
+            <FileInput id="image-input"
+                       className="full-width nudge-half--bottom"
+                       accept="image/x-png, image/gif, image/jpeg"
+                       processFile={this.updateImage} />
+
+            <strong className="line-thru">or</strong>
+
+            <input type="text"
+                   valueLink={this.linkState('imageUrl')}
+                   id="image-url"
+                   placeholder="Direct image URL"
+                   className="full-width nudge-half--bottom" />
+
+            {this.renderError()}
+
+            <div>
+              <button type="submit"
+                      className="btn block full-width"
+                      style={{ 'margin': '0 auto' }}
+                      name="commit"
+                      id="uploadHero">
+                <Spinner loading={this.state.loading} />
+                Submit
+              </button>
+              or <a onClick={this.toggleHeroModal}>Cancel</a>
+            </div>
+          </form>
 
         </Modal>
       );

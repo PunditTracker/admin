@@ -1,12 +1,11 @@
 'use strict';
 
 var React         = require('react/addons');
-var Link          = require('react-router').Link;
 var DocumentTitle = require('react-document-title');
 
-var SetHeader     = require('../components/SetHeader');
+var SetHero     = require('../components/SetHero');
 
-var SetHeaderPage = React.createClass({
+var SetHeroPage = React.createClass({
 
   propTypes: {
     currentUser: React.PropTypes.object.isRequired
@@ -24,7 +23,7 @@ var SetHeaderPage = React.createClass({
       <DocumentTitle title="Set Header">
       <section className="content set-header">
 
-        <SetHeader currentUser={this.props.currentUser} currentCategory={this.props.currentCategory} />
+        <SetHero currentUser={this.props.currentUser} currentCategory={this.props.currentCategory} />
 
       </section>
       </DocumentTitle>
@@ -33,4 +32,4 @@ var SetHeaderPage = React.createClass({
 
 });
 
-module.exports = SetHeaderPage;
+module.exports = SetHeroPage;

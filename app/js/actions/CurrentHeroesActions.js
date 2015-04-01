@@ -4,7 +4,8 @@ var Reflux = require('reflux');
 
 var CurrentHeroesActions = Reflux.createActions([
 
-  'getHeroes'
+  'getHeroes',
+  'saveHero'
 
 ]);
 

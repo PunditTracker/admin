@@ -34,11 +34,11 @@ var HomePage = React.createClass({
 
         <div className="container">
           <ul>
-            <ListLink to="SetHeader">Set Header</ListLink>
-            <ListLink to="Search">Search</ListLink>
+            <ListLink to="SetHero">Set Hero</ListLink>
+            <ListLink to="PredictionSearch">Prediction Search</ListLink>
+            <ListLink to="SetPredictions">Set Predictions</ListLink>
             <ListLink to="AnyUserPredict">Submit Predictions as Any User</ListLink>
             <ListLink to="SubmitSpecialEventResults">Bulk Submit Special Event Results</ListLink>
-            <ListLink to="AdvSearch">Advanced Search</ListLink>
           </ul>
         </div>
 
