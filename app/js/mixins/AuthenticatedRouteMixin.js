@@ -10,8 +10,8 @@ var AuthenticatedRouteMixin = {
   mixins: [Navigation],
 
   _checkIfRedirect: function() {
-    var userNotAdmin = !CurrentUserStore.user.isAdmin;
-    var checkedAndNoUser =  _.isEmpty(CurrentUserStore.user) && CurrentUserStore.hasBeenChecked;
+    var userNotAdmin = CurrentUserStore.user && !CurrentUserStore.user.isAdmin;
+    var checkedAndNoUser = _.isEmpty(CurrentUserStore.user) && CurrentUserStore.hasBeenChecked;
 
     if ( (userNotAdmin || checkedAndNoUser) && this.isMounted() ) {
       this.replaceWith('Login');
