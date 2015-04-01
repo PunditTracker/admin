@@ -334,7 +334,9 @@ var AnyUserPredictPage = React.createClass({
       <section className="content no-hero predict">
 
         <div className="container card-grid">
-          <UserSearch handleResultsRowClick={this.setCreator} itemsPerPage={5} />
+          <UserSearch handleResultsRowClick={this.setCreator}
+                      itemsPerPage={5}
+                      showNoResultsMessage={false} />
 
           <div className="content-with-sidebar left hard--bottom">
             {this.state.posted ? this.renderSuccessMessage() : this.renderForm()}

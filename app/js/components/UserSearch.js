@@ -19,7 +19,8 @@ var UserSearch = React.createClass({
 
   getDefaultProps: function() {
     return {
-      itemsPerPage: 5,
+      itemsPerPage: 10,
+      showNoResultsMessage: true,
       handleResultsRowClick: function() {}
     };
   },
@@ -54,10 +55,11 @@ var UserSearch = React.createClass({
           <SearchTable data={this.state.results}
                        cols={['id', 'firstName', 'lastName', 'affiliation', 'created']}
                        itemsPerPage={this.props.itemsPerPage}
-                       handleResultsRowClick={this.props.handleResultsRowClick} />
+                       handleResultsRowClick={this.props.handleResultsRowClick}
+                       showNoResultsMessage={this.props.showNoResultsMessage} />
         </div>
       );
-    } else if ( !this.state.loading ) {
+    } else if ( !this.state.loading && this.props.showNoResultsMessage ) {
       element = (
         <h4 className="text-center">No results.</h4>
       );
