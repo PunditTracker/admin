@@ -76,8 +76,9 @@ var Header = React.createClass({
               </Link>
               <ul className="categories">
                 <ListLink to="SetHero">Set Hero</ListLink>
-                <ListLink to="PredictionSearch">Prediction Search</ListLink>
                 <ListLink to="SetPredictions">Set Predictions</ListLink>
+                <ListLink to="PredictionSearch">Prediction Search</ListLink>
+                <ListLink to="UserSearch">User Search</ListLink>
               </ul>
               <UserDropdown currentUser={this.props.currentUser} />
             </div>
