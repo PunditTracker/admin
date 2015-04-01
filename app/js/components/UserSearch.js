@@ -22,7 +22,11 @@ var UserSearch = React.createClass({
     return {
       itemsPerPage: 10,
       showNoResultsMessage: true,
-      handleResultsRowClick: function() {}
+      handleResultsRowClick: function(user) {
+        var profileUrl = 'http://pundittracker.com/user/' + user.id;
+        var win = window.open(profileUrl, '_blank');
+        win.focus();
+      }
     };
   },
 
