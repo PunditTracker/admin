@@ -77,7 +77,10 @@ var UserSearch = React.createClass({
     this.setState({ loading: true });
 
     PredictionAPI.searchWithDates(this.state.query,this.state.startDate, this.state.endDate).then(function(results){
-      this.setState({ loading: false, results: results });
+      this.setState({ loading: false, results: this.state.results.concat(results) });
+    }.bind(this));
+    PredictionAPI.searchWithUserName(this.state.query).then(function(results){
+      this.setState({loading:false, results: this.state.results.concat(results)})
     }.bind(this));
   },
 
