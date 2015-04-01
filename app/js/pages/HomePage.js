@@ -10,19 +10,13 @@ var HomePage = React.createClass({
 
   mixins: [AuthenticatedRouteMixin],
 
-  componentDidMount: function()
-  {
-    this.props.setCategory(0);
-  },
-
   propTypes: {
     currentUser: React.PropTypes.object.isRequired
   },
 
   getDefaultProps: function() {
     return {
-      currentUser: {},
-      currentCategory: 0
+      currentUser: {}
     };
   },
 

@@ -30,7 +30,7 @@ var Login = React.createClass({
   },
 
   _redirectIfUser: function() {
-    if ( !_.isEmpty(CurrentUserStore.user) && CurrentUserStore.hasBeenChecked ) {
+    if ( !_.isEmpty(CurrentUserStore.user) && CurrentUserStore.hasBeenChecked && this.isMounted() ) {
       this.replaceWith('Home');
     }
   },
