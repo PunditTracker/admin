@@ -1,16 +1,19 @@
 'use strict';
 
-var React           = require('react/addons');
-var _               = require('lodash');
-var $               = require('jquery');
-var when            = require('when');
-var DocumentTitle   = require('react-document-title');
+var React                   = require('react/addons');
+var _                       = require('lodash');
+var $                       = require('jquery');
+var when                    = require('when');
+var DocumentTitle           = require('react-document-title');
 
-var data            = require('../data/oscars_2015');
-var APIUtils        = require('../utils/APIUtils');
-var Spinner         = require('../components/Spinner');
+var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
+var data                    = require('../data/oscars_2015');
+var APIUtils                = require('../utils/APIUtils');
+var Spinner                 = require('../components/Spinner');
 
 var SpecialEventResultsPage = React.createClass({
+
+  mixins: [AuthenticatedRouteMixin],
 
   propTypes: {
     currentUser: React.PropTypes.object.isRequired

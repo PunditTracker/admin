@@ -11,10 +11,13 @@ var CurrentUserStore   = require('../stores/CurrentUserStore');
 var Spinner            = require('../components/Spinner');
 
 var Login = React.createClass({
+
   mixins: [React.addons.LinkedStateMixin, Navigation],
+
   propTypes: {
     currentUser: React.PropTypes.object.isRequired
   },
+
   getInitialState: function() {
     return {
       email: '',

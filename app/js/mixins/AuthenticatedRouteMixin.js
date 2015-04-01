@@ -8,8 +8,12 @@ var CurrentUserStore = require('../stores/CurrentUserStore');
 var AuthenticatedRouteMixin = {
 
   mixins: [Navigation],
+
   _checkIfRedirect: function() {
-    if ( _.isEmpty(CurrentUserStore.user) && CurrentUserStore.hasBeenChecked && this.isMounted() ) {
+    var userNotAdmin = !CurrentUserStore.user.isAdmin;
+    var checkedAndNoUser =  _.isEmpty(CurrentUserStore.user) && CurrentUserStore.hasBeenChecked;
+
+    if ( (userNotAdmin || checkedAndNoUser) && this.isMounted() ) {
       this.replaceWith('Login');
     }
   },

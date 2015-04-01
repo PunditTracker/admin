@@ -1,11 +1,14 @@
 'use strict';
 
-var React         = require('react/addons');
-var DocumentTitle = require('react-document-title');
+var React                   = require('react/addons');
+var DocumentTitle           = require('react-document-title');
 
-var SetHero     = require('../components/SetHero');
+var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
+var SetHero                 = require('../components/SetHero');
 
 var SetHeroPage = React.createClass({
+
+  mixins: [AuthenticatedRouteMixin],
 
   propTypes: {
     currentUser: React.PropTypes.object.isRequired

@@ -7,8 +7,13 @@ var PredictionAPI = {
   getAll: function() {
     return APIUtils.get('prediction?limit=50');
   },
-  getAllWithDates: function(searchString, startDate, endDate){
-  	return APIUtils.get('/prediction/search/'+searchString+'?before='+endDate.format()+'&after='+startDate.format());
+
+  search: function(query){
+    return APIUtils.get('/prediction/search/' + query);
+  },
+
+  searchWithDates: function(query, startDate, endDate){
+  	return APIUtils.get('/prediction/search/'+query+'?before='+endDate.format()+'&after='+startDate.format());
   }
 
 };

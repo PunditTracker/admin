@@ -1,20 +1,21 @@
 'use strict';
 
-var React           = require('react/addons');
-var DateRangePicker = require('react-bootstrap-daterangepicker');
-var moment          = require('moment');
-var _               = require('lodash');
-var DocumentTitle   = require('react-document-title');
+var React                   = require('react/addons');
+var DateRangePicker         = require('react-bootstrap-daterangepicker');
+var moment                  = require('moment');
+var _                       = require('lodash');
+var DocumentTitle           = require('react-document-title');
 
-var SearchTable     = require('../components/SearchTable');
-var PredictionAPI   = require('../utils/PredictionAPI');
-var Spinner         = require('../components/Spinner');
+var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
+var SearchTable             = require('../components/SearchTable');
+var PredictionAPI           = require('../utils/PredictionAPI');
+var Spinner                 = require('../components/Spinner');
 
 var format = 'MMM Do YYYY';
 
 var PredictionSearchPage = React.createClass({
 
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [React.addons.LinkedStateMixin, AuthenticatedRouteMixin],
 
   getInitialState: function() {
     return {
@@ -59,7 +60,7 @@ var PredictionSearchPage = React.createClass({
 
     this.setState({ loading: true });
 
-    PredictionAPI.getAllWithDates(this.state.query,this.state.startDate, this.state.endDate).then(function(data){
+    PredictionAPI.searchWithDates(this.state.query,this.state.startDate, this.state.endDate).then(function(data){
       this.setState({ loading: false, data: data });
     }.bind(this));
   },
