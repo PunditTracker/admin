@@ -46,10 +46,6 @@ var App = React.createClass({
     this.listenTo(CurrentUserStore, this._onUserChange);
   },
 
-  setCategory: function(cat) {
-    this.setState({currentCategory: cat});
-  },
-
   renderHeader: function() {
     var element = null;
 
@@ -72,8 +68,7 @@ var App = React.createClass({
         <RouteHandler params={this.props.params}
                       query={this.props.query}
                       currentUser={this.state.currentUser}
-                      categories={this.state.categories}
-                      setCategory={this.setCategory} />
+                      categories={this.state.categories} />
 
       </div>
     );

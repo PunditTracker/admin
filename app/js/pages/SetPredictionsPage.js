@@ -2,10 +2,11 @@
 
 var React                   = require('react/addons');
 var _                       = require('lodash');
-var Link                    = require('react-router').Link;
 var DocumentTitle           = require('react-document-title');
 
 var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
+var APIUtils                = require('../utils/APIUtils');
+var PredictionSearch        = require('../components/PredictionSearch');
 
 var CategoryPage = React.createClass({
 
@@ -25,26 +26,35 @@ var CategoryPage = React.createClass({
 
   getInitialState: function() {
     return {
-      pageId: 0
+      categoryId: 0
     };
   },
 
-  componentDidMount: function() {
-    console.log("SetCat");
-    this.props.setCategory(1);
+  setNewCategory: function(id) {
+    this.setState({ categoryId: id });
   },
 
-  renderCategoryLinks: function() {
+  choosePredictionFromResults: function(prediction) {
+    console.log('choose prediction:', prediction);
+  },
+
+  renderCategoryToggles: function() {
     var elements = null;
+    var isDisabled;
 
     if ( this.props.categories && this.props.categories.length ) {
       elements = _.map(this.props.categories, function(category, index) {
+        isDisabled = this.state.categoryId === category.id;
+
         return (
-          <ListLink to="Category" params={{ category: category.name.toLowerCase() }} key={index}>
+          <button className="btn float-left nudge-half--right"
+                  onClick={this.setNewCategory.bind(null, category.id)}
+                  key={index}
+                  disabled={isDisabled ? 'true' : ''}>
             {APIUtils.titleCase(category.name)}
-          </ListLink>
+          </button>
         );
-      });
+      }.bind(this));
     }
 
     return elements;
@@ -55,6 +65,23 @@ var CategoryPage = React.createClass({
     return (
       <DocumentTitle title="Set Predictions">
       <section className="content no-hero set-predictions-page">
+
+        <div className="container">
+
+          <div className="clearfix nudge--bottom">
+            <button className="btn float-left nudge-half--right"
+                    onClick={this.setNewCategory.bind(null, 0)}
+                    disabled={this.state.categoryId === 0 ? 'true' : ''}>
+              Home
+            </button>
+            {this.renderCategoryToggles()}
+          </div>
+
+          <PredictionSearch handleResultsRowClick={this.choosePredictionFromResults}
+                            itemsPerPage={5}
+                            showNoResultsMessage={false} />
+
+        </div>
 
       </section>
       </DocumentTitle>
