@@ -1,11 +1,14 @@
 @import 'vars';
 
-// Admin-specific base styles
-@import 'admin';
-
 // Element styles
+@import 'elements/modal';
 @import 'elements/date-range-picker';
 @import 'elements/reactable';
+
+// Page styles
+@import 'pages/home';
+@import 'pages/set-hero';
+@import 'pages/set-predictions';
 
 .clearfix {
   *zoom: 1;
@@ -17,14 +20,4 @@
   &:after {
     clear: both;
   }
-}
-
-div.modal-backdrop {
-  min-height:1000px;
-  position:absolute !important;
-}
-
-div.hero-modal {
-  margin-top:20px !important;
-  width:800px !important;
 }
