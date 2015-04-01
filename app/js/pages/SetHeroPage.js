@@ -23,8 +23,8 @@ var SetHeroPage = React.createClass({
 
   render: function() {
     return (
-      <DocumentTitle title="Set Header">
-      <section className="content set-header">
+      <DocumentTitle title="Set Hero">
+      <section className="content set-hero-page">
 
         <h3 className="text-center flush--top">Set Hero Features</h3>
 

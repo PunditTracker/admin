@@ -16,6 +16,7 @@ var UserSearch = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
 
   propTypes: {
+    showNoResultsMessage: React.PropTypes.bool,
     handleResultsRowClick: React.PropTypes.func
   },
 

@@ -14,6 +14,7 @@ var UserSearch = React.createClass({
 
   propTypes: {
     itemsPerPage: React.PropTypes.number,
+    showNoResultsMessage: React.PropTypes.bool,
     handleResultsRowClick: React.PropTypes.func
   },
 
