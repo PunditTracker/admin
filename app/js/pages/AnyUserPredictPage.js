@@ -12,6 +12,7 @@ var PredictionCard          = require('../components/PredictionCard');
 var User                    = require('../components/User');
 var TagInput                = require('../components/TagInput');
 var Spinner                 = require('../components/Spinner');
+var UserSearch              = require('../components/UserSearch');
 
 var AnyUserPredictPage = React.createClass({
 
@@ -101,6 +102,10 @@ var AnyUserPredictPage = React.createClass({
 
   setDeadline: function(evt) {
     this.setState({ deadline: evt.target.value || null });
+  },
+
+  setCreator: function(user) {
+    this.setState({ creatorId: user.id });
   },
 
   handleSubmit: function(evt) {
@@ -329,6 +334,8 @@ var AnyUserPredictPage = React.createClass({
       <section className="content no-hero predict">
 
         <div className="container card-grid">
+          <UserSearch handleResultsRowClick={this.setCreator} itemsPerPage={5} />
+
           <div className="content-with-sidebar left hard--bottom">
             {this.state.posted ? this.renderSuccessMessage() : this.renderForm()}
           </div>
