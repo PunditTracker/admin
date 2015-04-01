@@ -134,10 +134,10 @@ var UserSearch = React.createClass({
 
     return (
       <div>
-        <h4 className="text-center flush--top">
+        <h5 className="text-center flush--top nudge--bottom">
           Currently Searching Created Date Range: {this.state.startDate.format(format)} - {this.state.endDate.format(format)}
           <button className="btn nudge-half--left" style={{ 'fontSize': 14 }} onClick={this.toggleDatepicker}>Change</button>
-        </h4>
+        </h5>
 
         {this.renderDatePicker()}
 

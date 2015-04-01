@@ -20,7 +20,7 @@ var PredictionSearchPage = React.createClass({
       <section className="content no-hero prediction-search-page">
 
         <div className="container">
-          <h3 className="text-center flush">Advanced Prediction Search</h3>
+          <h3 className="text-center flush--top">Advanced Prediction Search</h3>
 
           <PredictionSearch />
         </div>

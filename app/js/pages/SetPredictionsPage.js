@@ -67,6 +67,7 @@ var CategoryPage = React.createClass({
       <section className="content no-hero set-predictions-page">
 
         <div className="container">
+          <h3 className="text-center flush--top">Set Predictions by Category</h3>
 
           <div className="clearfix nudge--bottom">
             <button className="btn float-left nudge-half--right"

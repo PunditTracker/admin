@@ -334,6 +334,8 @@ var AnyUserPredictPage = React.createClass({
       <section className="content no-hero predict">
 
         <div className="container card-grid">
+          <h3 className="text-center flush--top">Submit a Prediction by Any User</h3>
+
           <UserSearch handleResultsRowClick={this.setCreator}
                       itemsPerPage={5}
                       showNoResultsMessage={false} />
