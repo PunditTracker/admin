@@ -44,14 +44,14 @@ var CategoryPage = React.createClass({
     if ( err ) {
       this.setState({ error: err.message });
     } else {
-      locations = locations || [{}];
+      locations = locations || [{ locationNum: 0 }];
       // Ensure there's always an empty location to edit
       if ( !_.isEmpty(locations[locations.length-1].prediction) ) {
         locations.push({
           locationNum: locations.length
         });
       }
-      this.setState({ locations: locations || [{}], error: null });
+      this.setState({ locations: locations || [{ locationNum: 0 }], error: null });
     }
   },
 
@@ -127,30 +127,27 @@ var CategoryPage = React.createClass({
 
     this.showPredictionSearchModal(function(prediction) {
       existingLocation = this.getLocationAtNum(locationNum);
-
-      if ( existingLocation !== null ) {
-        location = {
-          id: _.isNumber(existingLocation.id) ? existingLocation.id : 0,
-          locationNum: locationNum,
-          categoryId: this.state.categoryId,
-          prediction: prediction,
-          predictionId: prediction.id
-        };
-      } else {
-        // TODO: somehow indicate the location should be deleted
-        location = null;
-      }
+      location = {
+        id: _.isNumber(existingLocation.id) ? existingLocation.id : 0,
+        locationNum: locationNum,
+        categoryId: this.state.categoryId,
+        prediction: prediction,
+        predictionId: prediction.id
+      };
 
       updatedLocationsCopy.push(location);
 
       // Ensure there's always an empty location to edit
       if ( this.state.locations && locationNum === this.state.locations.length - 1 ) {
-        locationsCopy.push({});
+        locationsCopy.push({
+          locationNum: this.state.locations.length
+        });
       }
 
       this.setState({ locations: locationsCopy, updatedLocations: updatedLocationsCopy }, function() {
         console.log('updated locations:', this.state.updatedLocations);
       }.bind(this));
+
       this.replaceLocation(locationNum, location);
     }.bind(this));
   },
