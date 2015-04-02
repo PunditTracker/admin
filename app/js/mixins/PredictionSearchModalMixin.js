@@ -45,6 +45,7 @@ var PredictionSearchModalMixin = {
   },
 
   showPredictionSearchModal: function(selectCb) {
+    console.log('show modal:', selectCb.toString());
     this._selectCallback = selectCb || function() {};
     this.setState({ showPredictionSearchModal: true });
   },

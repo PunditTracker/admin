@@ -9,15 +9,15 @@ var PredictionAPI = {
   },
 
   search: function(query){
-    return APIUtils.get('/prediction/search/' + query);
+    return APIUtils.get('prediction/search/' + query);
   },
 
   searchWithDates: function(query, startDate, endDate){
-  	return APIUtils.get('/prediction/search/'+query+'?before='+endDate.format()+'&after='+startDate.format());
+  	return APIUtils.get('prediction/search/'+query+'?before='+endDate.format()+'&after='+startDate.format());
   },
 
   searchByUser: function(query){
-  	return APIUtils.get('/user/prediction/search/' + query);
+  	return APIUtils.get('user/prediction/search/' + query);
   }
 
 };

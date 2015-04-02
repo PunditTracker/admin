@@ -10,5 +10,5 @@ div.hero-modal {
 
 div.modal.user-search-modal,
 div.modal.prediction-search-modal {
-  width: 900px;
+  min-width: 900px !important;
 }
