@@ -31,12 +31,12 @@ var Hero = React.createClass({
   },
 
   _buildLinkUrl: function(url) {
-    var urlRegex = new RegExp('http', 'gi');
+    var httpRegex = new RegExp('http', 'gi');
     var wwwRegex = new RegExp('www\.', 'gi');
 
     if ( wwwRegex.test(url) ) {
       url = 'http://' + url;
-    } else if ( !urlRegex.test(url) ) {
+    } else if ( !httpRegex.test(url) ) {
       url = 'http://pundittracker.com' + url;
     }
 
