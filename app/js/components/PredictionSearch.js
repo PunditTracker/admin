@@ -9,7 +9,16 @@ var PredictionAPI           = require('../utils/PredictionAPI');
 var Spinner                 = require('../components/Spinner');
 var SearchTable             = require('../components/SearchTable');
 
-var format                  = 'MMM Do YYYY';
+var format = 'MMM Do YYYY';
+var ranges = {
+  'Last 24 hours': [moment().subtract(1, 'days'), moment()],
+  'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+  'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+  'This Month': [moment().startOf('month'), moment().endOf('month')],
+  'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+  'Last Year': [moment().subtract(1, 'year'), moment()],
+  'Last 5 Years': [moment().subtract(5, 'year'), moment()]
+};
 
 var UserSearch = React.createClass({
 
@@ -35,15 +44,6 @@ var UserSearch = React.createClass({
       startDate: moment().subtract(1, 'days'),
       endDate: moment(),
       query: '',
-      ranges: {
-        'Last 24 hours': [moment().subtract(1, 'days'), moment()],
-        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-        'This Month': [moment().startOf('month'), moment().endOf('month')],
-        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-        'Last Year': [moment().subtract(1, 'year'), moment()],
-        'Last 5 Years': [moment().subtract(5, 'year'), moment()],
-      },
       error: null,
       loadingPredictionSearch: false,
       loadingPredictionSearchByUser: false
@@ -104,7 +104,7 @@ var UserSearch = React.createClass({
       element = (
         <DateRangePicker startDate={this.state.startDate}
                          endDate={this.state.endDate}
-                         ranges={this.state.ranges}
+                         ranges={ranges}
                          onEvent={this.handleEvent} />
       );
     }
