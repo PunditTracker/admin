@@ -10,9 +10,14 @@ var CurrentUserActions = require('../actions/CurrentUserActions');
 var CurrentUserStore   = require('../stores/CurrentUserStore');
 var Spinner            = require('../components/Spinner');
 
+var Activity           = require('../mixins/ActivityMixin');
+
+var cb = function() {
+    console.log('User has become inactive!');
+};
 var Login = React.createClass({
 
-  mixins: [React.addons.LinkedStateMixin, Navigation],
+  mixins: [React.addons.LinkedStateMixin, Navigation, Activity({interval: 5000}, cb)],
 
   propTypes: {
     currentUser: React.PropTypes.object.isRequired
@@ -124,7 +129,7 @@ var Login = React.createClass({
       <section className="login-page">
         <form style={formStyles} className="text-center" id="loginform" onSubmit={this.handleSubmit}>
 
-          <img src="../images/logo_black.png" alt="PunditTracker logo" style={{ 'maxWidth': '55%' }} />
+          <img src="../images/logo_black.png" onMouseOver={this.triggerActivity} alt="PunditTracker logo" style={{ 'maxWidth': '55%' }} />
 
           <h4>Admin Console</h4>
 
