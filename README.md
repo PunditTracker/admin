@@ -1,7 +1,7 @@
 admin-react
 ============
 
-Admin backend using ReactJS (along with React Router and RefluxJS), SASS, Gulp, and Browserify that also utilizes Gulp best practices from [this resource](https://github.com/greypants/gulp-starter), boilerplate from [this resource](https://github.com/jakemmarsh/react-rocket).
+Admin backend using ReactJS (along with React Router and RefluxJS), SASS, Gulp, and Browserify that also utilizes Gulp best practices from [this resource](https://github.com/greypants/gulp-starter), boilerplate from [this resource](https://github.com/jakemmarsh/react-rocket-boilerplate).
 
 ---
 
