@@ -2,6 +2,7 @@
 
 var gulp         = require('gulp');
 var dotenv       = require('dotenv');
+var argv         = require('yargs').argv;
 var awspublish   = require('gulp-awspublish');
 var config       = require('../config');
 
@@ -10,10 +11,10 @@ dotenv.load();
 gulp.task('deploy', ['prod'], function() {
 
     var publisher = awspublish.create({
-      bucket: 'admin.dev.pundittracker.com'
       key: process.env.AWS_KEY,
       secret: process.env.AWS_SECRET,
       region: process.env.AWS_REGION,
+      bucket: (argv.production || argv.prod) ? process.env.S3_PROD_BUCKET : process.env.S3_DEV_BUCKET
     });
     var oneWeekInSeconds = 60*60*24*7;
     var headers = {
