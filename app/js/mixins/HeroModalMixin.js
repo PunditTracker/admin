@@ -2,6 +2,7 @@
 
 var React                 = require('react/addons');
 var when                  = require('when');
+var _                     = require('lodash');
 
 var APIUtils              = require('../utils/APIUtils');
 var CurrentHeroesActions  = require('../actions/CurrentHeroesActions');
@@ -30,10 +31,17 @@ var HeroModalMixin = {
     };
   },
 
-  toggleHeroModal: function(locationNum) {
+  toggleHeroModal: function(locationNum, hero) {
+    var heroExists = !_.isEmpty(hero);
+
     this.setState({
       showHeroModal: !this.state.showHeroModal,
-      locationNumber: locationNum
+      locationNumber: locationNum,
+      title: heroExists ? hero.title : this.state.title,
+      buttonText: heroExists ? hero.buttonText : this.state.buttonText,
+      buttonUrl: heroExists ? hero.buttonUrl : this.state.buttonUrl,
+      imageUrl: heroExists ? hero.imageUrl : this.state.imageUrl,
+      predictionId: heroExists ? hero.predictionId : this.state.predictionId
     });
   },
 
@@ -64,7 +72,7 @@ var HeroModalMixin = {
   updateHero: function() {
     var deferred = when.defer();
     var hero = {
-      id: this.state.hero[this.state.locationNumber].id,
+      id: this.state.heroes[this.state.locationNumber].id,
       locationNum: this.state.locationNumber,
       title: this.state.title,
       buttonText: this.state.buttonText,

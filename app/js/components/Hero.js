@@ -14,15 +14,15 @@ var Hero = React.createClass({
 
   getInitialState: function() {
     return {
-      hero: []
+      heroes: []
     };
   },
 
-  _onHeroChange: function(err, hero) {
+  _onHeroChange: function(err, heroes) {
     if ( err ) {
       this.setState({ error: err });
     } else {
-      this.setState({ hero: hero || [], error: null });
+      this.setState({ heroes: heroes || [], error: null });
     }
   },
 
@@ -49,9 +49,9 @@ var Hero = React.createClass({
   },
 
   render: function() {
-    var heroOne = this.state.hero[1] || {};
-    var heroTwo = this.state.hero[2] || {};
-    var heroThree = this.state.hero[3] || {};
+    var heroOne = this.state.heroes[1] || {};
+    var heroTwo = this.state.heroes[2] || {};
+    var heroThree = this.state.heroes[3] || {};
 
     return (
       <div className="hero fixed done nudge--bottom hard--top">
@@ -59,7 +59,7 @@ var Hero = React.createClass({
           <div className="pure-u-2-3">
             <div className="feature-card location-1 left large">
               <div className="background" style={{ 'backgroundImage': this._buildImageUrl(heroOne.imageUrl) }}>
-                <span className="edit"><a onClick={this.toggleHeroModal.bind(this, 1)}>Edit</a></span>
+                <span className="edit"><a onClick={this.toggleHeroModal.bind(this, 1, heroOne)}>Edit</a></span>
                 <div className="scrim"></div>
               </div>
               <div className="inner">
@@ -79,7 +79,7 @@ var Hero = React.createClass({
               <div className="pure-u-1">
                 <div className="feature-card right location-2">
                   <div className="background" style={{ 'backgroundImage': this._buildImageUrl(heroTwo.imageUrl) }}>
-                    <span className='edit'><a onClick={this.toggleHeroModal.bind(this, 2)}>Edit</a></span>
+                    <span className='edit'><a onClick={this.toggleHeroModal.bind(this, 2, heroTwo)}>Edit</a></span>
                     <div className="scrim"></div>
                   </div>
                   <div className="inner">
@@ -96,7 +96,7 @@ var Hero = React.createClass({
               <div className="pure-u-1">
                 <div className="feature-card right march-madness-card location-3">
                   <div className="background" style={{ 'backgroundImage': this._buildImageUrl(heroThree.imageUrl) }}>
-                    <span className="edit"><a onClick={this.toggleHeroModal.bind(this, 3)}>Edit</a></span>
+                    <span className="edit"><a onClick={this.toggleHeroModal.bind(this, 3, heroThree)}>Edit</a></span>
                     <div className="scrim"></div>
                   </div>
                   <div className="inner">
