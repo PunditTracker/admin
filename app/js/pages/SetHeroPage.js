@@ -4,14 +4,15 @@ var React                   = require('react/addons');
 var DocumentTitle           = require('react-document-title');
 
 var AuthenticatedRouteMixin = require('../mixins/AuthenticatedRouteMixin');
-var SetHero                 = require('../components/SetHero');
+var Hero                    = require('../components/Hero');
 
 var SetHeroPage = React.createClass({
 
   mixins: [AuthenticatedRouteMixin],
 
   propTypes: {
-    currentUser: React.PropTypes.object.isRequired
+    currentUser: React.PropTypes.object.isRequired,
+    currentCategory: React.PropTypes.number
   },
 
   getDefaultProps: function() {
@@ -21,6 +22,29 @@ var SetHeroPage = React.createClass({
     };
   },
 
+  renderBody: function() {
+    var element = null;
+
+    if ( this.props.currentCategory === 0 ) {
+      element = (
+        <section className="hero">
+          <Hero />
+        </section>
+      );
+    } else {
+      element = (
+        <section className="hero">
+          <p>
+            Set Hero of page:
+            <input type="text" className="fullWidth" value="Hero"/></p>
+          <br/>
+        </section>
+      );
+    }
+
+    return element;
+  },
+
   render: function() {
     return (
       <DocumentTitle title="Set Hero">
@@ -28,7 +52,7 @@ var SetHeroPage = React.createClass({
 
         <h3 className="text-center flush--top">Set Hero Features</h3>
 
-        <SetHero currentUser={this.props.currentUser} currentCategory={this.props.currentCategory} />
+        {this.renderBody()}
 
       </section>
       </DocumentTitle>
