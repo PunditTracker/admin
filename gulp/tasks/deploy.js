@@ -4,12 +4,16 @@ var gulp         = require('gulp');
 var dotenv       = require('dotenv');
 var argv         = require('yargs').argv;
 var awspublish   = require('gulp-awspublish');
+var runSequence  = require('run-sequence');
 var config       = require('../config');
 
 dotenv.load();
 
-gulp.task('deploy', ['prod'], function() {
+gulp.task('deploy', function() {
 
+  var switcHAPITask = 'emptyTask';
+
+  var publish = function() {
     var publisher = awspublish.create({
       key: process.env.AWS_KEY,
       secret: process.env.AWS_SECRET,
@@ -26,5 +30,13 @@ gulp.task('deploy', ['prod'], function() {
     .pipe(awspublish.gzip())
     .pipe(publisher.publish(headers))
     .pipe(awspublish.reporter());
+  };
+
+  // Run task to change API URL to prod server if deploying to prod
+  if ( argv.production || argv.prod ) {
+    switcHAPITask = 'switchAPI';
+  }
+
+  return runSequence('prod', switcHAPITask, publish);
 
 });
